@@ -112,7 +112,7 @@ ________________________________________________________________________________
 		JLabel nom_bille = new JLabel("Bille " + num_bille);
 		tab.add(nom_bille,c);
 		
-		final JComboBox couleur = new JComboBox(new String[] {"Bleu","Rouge     ","Vert","Jaune"});
+		final JComboBox couleur = new JComboBox(new String[] {"Bleu","Rouge","Vert","Jaune"});
 		couleur.setEditable(false);
 		couleur.addActionListener(new ActionListener() {
 			
