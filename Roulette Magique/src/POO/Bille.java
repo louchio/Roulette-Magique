@@ -4,25 +4,19 @@ public class Bille {
 
 	//Attributs
 	private String couleur;
-	private int	taille;
-	private int vitesse;
+	private String	taille;
+	private String vitesse;
 	private int num_bille;
 	
 	//Constructeur
-	public Bille(int num_bille, String couleur, int taille, int vitesse){
+	public Bille(int num_bille, String couleur, String taille, String vitesse){
 		this.setNum_bille(num_bille);
 		this.setCouleur(couleur);
 		this.setTaille(taille); 
 		this.setVitesse(vitesse);
+		System.out.println("Bille " + num_bille + ":" + couleur + "," + taille + "," + vitesse);
 	}
 	
-	public Bille(int num_bille){
-		this.setNum_bille(num_bille);
-		couleur = "bleu";
-		taille = 1;
-		vitesse = 1;
-	}
-
 	//Fonctions
 	public int LancerBille(){
 		java.util.Random rand = new java.util.Random();
@@ -39,19 +33,19 @@ public class Bille {
 		this.couleur = couleur;
 	}
 
-	public int getTaille() {
+	public String getTaille() {
 		return taille;
 	}
 
-	public void setTaille(int taille) {
+	public void setTaille(String taille) {
 		this.taille = taille;
 	}
 
-	public int getVitesse() {
+	public String getVitesse() {
 		return vitesse;
 	}
 
-	public void setVitesse(int vitesse) {
+	public void setVitesse(String vitesse) {
 		this.vitesse = vitesse;
 	}
 

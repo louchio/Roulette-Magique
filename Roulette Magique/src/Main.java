@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import IHM.Fenetre;
 import POO.Jeu;
 
@@ -5,18 +7,29 @@ import POO.Jeu;
 public class Main {
 
 	public static void main(String[] args) {
-//		Jeu t1 = new Jeu(2);
+//		ArrayList<String>liste_couleur = new ArrayList<String>();
+//		ArrayList<String>liste_taille = new ArrayList<String>();
+//		ArrayList<String>liste_vitesse = new ArrayList<String>();
+//		liste_couleur.add("Bleu");
+//		liste_couleur.add("Bleu");
+//		liste_taille.add("moyenne");
+//		liste_taille.add("grande");
+//		liste_vitesse.add("v");
+//		liste_vitesse.add("er");
+//		Jeu t1 = new Jeu(liste_couleur, liste_taille, liste_vitesse);
 //		System.out.println(t1.AfficherTapis());
 //
-//		t1.Miser(0, 10, 1);
-////		t1.Miser(2, 10, 1);
-////		t1.Miser(1, 19, 2);
-////		t1.Miser(1, 21, 2);
-////		t1.Miser(1, 24, 2);
-////		t1.Miser(1, 35, 2);
-////		t1.Miser(1, 1, 2);
-//		
-//
+////		t1.MiserNumero(0, 4, 0);
+//		t1.MiserPair(0, 4);
+////		t1.MiserImpair(0, 2);
+////		t1.MiserManque(1, 2);
+////		t1.MiserPasse(1, 2);
+////		t1.MiserCheval(1, 2, 4, 7);
+////		t1.MiserTransversale(2, 2, 7);
+////		t1.MiserCarre(1, 2, 4, 2, 1, 5);
+////		t1.MiserSizain(1, 2, 1);
+////		t1.MiserDouzaine(1, 2, 1);
+////		t1.MiserColonne(1, 2, 1);
 //		System.out.println("Gain : " + t1.CalculerGain());
 
 		
