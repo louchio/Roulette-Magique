@@ -112,7 +112,7 @@ ________________________________________________________________________________
 		JLabel nom_bille = new JLabel("Bille " + num_bille);
 		tab.add(nom_bille,c);
 		
-		final JComboBox couleur = new JComboBox(new String[] {"Bleu","Rouge","Vert","Jaune"});
+		final JComboBox<String> couleur = new JComboBox<String>(new String[] {"Bleu","Rouge","Vert","Jaune"});
 		couleur.setEditable(false);
 		couleur.addActionListener(new ActionListener() {
 			
@@ -123,7 +123,7 @@ ________________________________________________________________________________
 		});
 		tab.add(couleur,c);
 		
-		final JComboBox taille = new JComboBox(new String[] {"Petite","Moyenne","Grande"});
+		final JComboBox<String> taille = new JComboBox<String>(new String[] {"Petite","Moyenne","Grande"});
 		taille.setEditable(false);
 		taille.addActionListener(new ActionListener() {
 			
@@ -134,7 +134,7 @@ ________________________________________________________________________________
 		});
 		tab.add(taille, c);
 			
-		final JComboBox vitesse = new JComboBox(new String[] {"Lente","Moyenne","Rapide"});
+		final JComboBox<String> vitesse = new JComboBox<String>(new String[] {"Lente","Moyenne","Rapide"});
 		vitesse.setEditable(false);
 		vitesse.addActionListener(new ActionListener() {
 			

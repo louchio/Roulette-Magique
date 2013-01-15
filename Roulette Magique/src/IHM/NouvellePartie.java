@@ -63,7 +63,7 @@ ________________________________________________________________________________
 		c3.insets = new Insets(10, 10, 100, 10);
 //		c3.anchor = GridBagConstraints.LINE_START;
 		
-		final JComboBox nb_billes_selector = new JComboBox(new Integer[] {1,2,3,4});
+		final JComboBox<Integer> nb_billes_selector = new JComboBox<Integer>(new Integer[] {1,2,3,4});
 		nb_billes_selector.setEditable(false);
 		nb_billes_selector.addActionListener(new ActionListener() {
 			
