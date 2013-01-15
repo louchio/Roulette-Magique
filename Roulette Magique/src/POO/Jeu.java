@@ -1,6 +1,8 @@
 package POO;
 import java.util.ArrayList;
 
+import IHM.Partie;
+
 
 public class Jeu {
 
@@ -183,7 +185,7 @@ public class Jeu {
 		}	
 	}
 
-	public int CalculerGain() {
+	public int CalculerGain(Partie p) {
 		ArrayList<Integer> num_tombe = r1.Tourner_roue();
 		int gain = 0;
 		for (int j = 0; j < num_tombe.size(); j++){
@@ -194,10 +196,25 @@ public class Jeu {
 				gain = gain + tapis[j].CalculerGainSizain(num_tombe.get(j));
 				gain = gain + tapis[j].CalculerGainDouzaine(num_tombe.get(j));
 				gain = gain + tapis[j].CalculerGainColonne(num_tombe.get(j));
+				switch (j){
+				case 0:
+					p.num_tombe_bille1.setText(Integer.toString(num_tombe.get(j)));
+				case 1:
+					p.num_tombe_bille2.setText(Integer.toString(num_tombe.get(j)));
+				case 2:
+					p.num_tombe_bille3.setText(Integer.toString(num_tombe.get(j)));
+				case 3:
+					p.num_tombe_bille4.setText(Integer.toString(num_tombe.get(j)));
+				}
 		}
 		j1.Ajouter(gain);
 		System.out.println("Solde j1 :" + j1.getCompte());
 		return gain;
 	}
 
+	public void RemettreZero(){
+		for(int i = 0; i < nb_billes; i++){
+			tapis[i].remettre_a_zero();	
+		}
+	}
 }

@@ -20,11 +20,11 @@ public class Roue {
 	//Fonctions
 	public ArrayList<Integer> Tourner_roue(){
 		ArrayList<Integer> l = new ArrayList<Integer>();
-//		for( int i = 0; i < nb_billes; i++){
-//			l.add(tab[i].LancerBille());
-//		}
-		l.add(23);
-		l.add(11);
+		for( int i = 0; i < nb_billes; i++){
+			l.add(tab[i].LancerBille());
+		}
+//		l.add(23);
+//		l.add(11);
 //		l.add(0);
 		return l;
 	    

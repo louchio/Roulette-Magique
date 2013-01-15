@@ -22,20 +22,22 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
-import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
 
-import POO.Bille;
 import POO.Jeu;
 
 @SuppressWarnings("serial")
 public class Partie extends JPanel{
 	
 	//Attributs
-	private ArrayList<String> liste_couleur;
-	private ArrayList<String> liste_taille;
-	private ArrayList<String> liste_vitesse;
-	private ArrayList<Integer> liste_mise = new ArrayList<Integer>();
+	private int nb_billes;
+	private ArrayList<Integer> liste_somme = new ArrayList<Integer>();
+	private ArrayList<Integer> liste_bille = new ArrayList<Integer>();
+	private ArrayList<Integer> liste_num1 = new ArrayList<Integer>();
+	private ArrayList<Integer> liste_num2 = new ArrayList<Integer>();
+	private ArrayList<Integer> liste_num3 = new ArrayList<Integer>();
+	private ArrayList<Integer> liste_num4 = new ArrayList<Integer>();
+	private ArrayList<String> liste_mise = new ArrayList<String>();
 	private Integer[] liste_numero = new Integer[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36};
 	private JPanel tab = new JPanel();
 	private final JPanel chance_multiple = new JPanel();
@@ -69,13 +71,16 @@ public class Partie extends JPanel{
 	private JLabel solde;
 	private JPopupMenu supprimer_menu;
 	private JMenuItem supprimer;
+	public JLabel num_tombe_bille1 = new JLabel("0");
+	public JLabel num_tombe_bille2 = new JLabel("0");
+	public JLabel num_tombe_bille3 = new JLabel("0");
+	public JLabel num_tombe_bille4 = new JLabel("0");
+	JLabel gain = new JLabel("0");
 	
 	//Constructeurs
 	public Partie(ArrayList<String> liste_couleur, ArrayList<String> liste_taille, ArrayList<String> liste_vitesse, Fenetre f1){
 		
-		this.liste_couleur = liste_couleur;
-		this.liste_taille = liste_taille;
-		this.liste_vitesse = liste_vitesse;
+		nb_billes = liste_couleur.size();
 		
 		partie = new Jeu(liste_couleur, liste_taille, liste_vitesse);
 		
@@ -155,13 +160,13 @@ public class Partie extends JPanel{
 		
 		
 		num_bille_selector.addItem("Toute les billes");
-		for(int i=0; i<liste_couleur.size(); i++){
+		for(int i=0; i<nb_billes; i++){
 			num_bille_selector.addItem("Bille "+(i+1));
 		}
 		tab.add(num_bille_selector, positionnement(3, 3, 1, 1));
 		
 		JButton moins = new JButton("-");
-		mise = new JLabel(Integer.toString(liste_couleur.size()*2));
+		mise = new JLabel(Integer.toString(nb_billes*2));
 		JButton plus = new JButton("+");
 		
 		moins.addActionListener(moins_listener());
@@ -175,6 +180,8 @@ public class Partie extends JPanel{
 		JButton tourner = new JButton("Tourner Roue");
 		
 		miser.addActionListener(miser_listener());
+		tourner.addActionListener(tourner_listener());
+		
 		
 		tab.add(miser, positionnement(4, 0, 2, 1));
 		tab.add(tourner, positionnement(4, 3, 2, 1));
@@ -185,7 +192,7 @@ public class Partie extends JPanel{
 		solde = new JLabel(Integer.toString(partie.solde_compte()));
 		solde_panel.add(solde);
 		tab.add(solde_panel, positionnement(0, 7, 1, 1));
-				tab.add(list,positionnement(1, 7, 1, 4));
+		tab.add(list,positionnement(1, 7, 1, 4));
 		
 		supprimer_menu = new JPopupMenu();
 		supprimer = new JMenuItem("Supprimer");
@@ -206,11 +213,29 @@ public class Partie extends JPanel{
 
 	    }); 
 		
+		JLabel nom_bille1 = new JLabel("Bille 1");
+		tab.add(nom_bille1,positionnement(5, 0, 1, 1));
+		tab.add(num_tombe_bille1,positionnement(6, 0, 1, 1));
 		
-//		for(int i=0; i<liste_couleur.size(); i++){
-//			afficher_billes(i);
-//		}
-//		
+		JLabel nom_bille2 = new JLabel("Bille 2");
+		if(nb_billes < 2){nom_bille2.setVisible(false);num_tombe_bille2.setVisible(false);}
+		tab.add(nom_bille2,positionnement(5, 1, 1, 1));
+		tab.add(num_tombe_bille2,positionnement(6, 1, 1, 1));
+		
+		JLabel nom_bille3 = new JLabel("Bille 3");
+		if(nb_billes < 3){nom_bille3.setVisible(false);num_tombe_bille3.setVisible(false);}
+		tab.add(nom_bille3,positionnement(5, 2, 1, 1));
+		tab.add(num_tombe_bille3,positionnement(6, 2, 1, 1));
+		
+		JLabel nom_bille4 = new JLabel("Bille 4");
+		if(nb_billes < 4){nom_bille4.setVisible(false);num_tombe_bille4.setVisible(false);}
+		tab.add(nom_bille4,positionnement(5, 3, 1, 1));
+		tab.add(num_tombe_bille4,positionnement(6, 3, 1, 1));
+		
+		JLabel gain_label = new JLabel("Gain : ");
+		tab.add(gain_label,positionnement(5, 5, 1, 2));
+		tab.add(gain,positionnement(5, 6, 1, 2));
+		
 		add(tab, BorderLayout.CENTER);
 	}
 
@@ -271,7 +296,7 @@ public class Partie extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int temp = Integer.parseInt(mise.getText());
-				if(temp-2 >= liste_couleur.size()*2){
+				if(temp-2 >= nb_billes*2){
 					temp = temp - 2;
 					mise.setText(Integer.toString(temp));
 				}
@@ -290,49 +315,105 @@ public class Partie extends JPanel{
 					if(pair_button.isSelected()){
 						partie.MiserPair(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()));
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur Pair");
+						liste_mise.add("pair");
+						liste_num1.add(-1);
+						liste_num2.add(-1);
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					if(impair_button.isSelected()){
 						partie.MiserImpair(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()));
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur Impair");
+						liste_mise.add("impair");
+						liste_num1.add(-1);
+						liste_num2.add(-1);
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					if(manque_button.isSelected()){
 						partie.MiserImpair(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()));
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur Manque");
+						liste_mise.add("manque");
+						liste_num1.add(-1);
+						liste_num2.add(-1);
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					if(passe_button.isSelected()){
 						partie.MiserImpair(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()));
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur Passe");
+						liste_mise.add("passe");
+						liste_num1.add(-1);
+						liste_num2.add(-1);
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					if(numero_button.isSelected()){
 						partie.MiserNumero(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), num_bille_selector.getSelectedIndex());
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_selector.getSelectedIndex());
+						liste_mise.add("numero");
+						liste_num1.add(num_bille_selector.getSelectedIndex());
+						liste_num2.add(-1);
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					if(cheval_button.isSelected()){
 						partie.MiserCheval(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), numero_cheval_selector_1.getSelectedIndex(), numero_cheval_selector_2.getSelectedIndex());
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_cheval_selector_1.getSelectedIndex() + "," + numero_cheval_selector_2.getSelectedIndex());
+						liste_mise.add("cheval");
+						liste_num1.add(numero_cheval_selector_1.getSelectedIndex());
+						liste_num2.add(numero_cheval_selector_2.getSelectedIndex());
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					if(transversale_button.isSelected()){
 						partie.MiserTransversale(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), transversale_selector.getSelectedIndex()+1);
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + transversale_selector.getSelectedItem());
+						liste_mise.add("transversale");
+						liste_num1.add(transversale_selector.getSelectedIndex()+1);
+						liste_num2.add(-1);
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					if(carre_button.isSelected()){
 						partie.MiserCarre(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), numero_carre_selector_1.getSelectedIndex(), numero_carre_selector_2.getSelectedIndex(), numero_carre_selector_3.getSelectedIndex(), numero_carre_selector_4.getSelectedIndex());
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_carre_selector_1.getSelectedIndex() + "," + numero_carre_selector_2.getSelectedIndex() + "," + numero_carre_selector_3.getSelectedIndex() + "," + numero_carre_selector_4.getSelectedIndex());
+						liste_mise.add("carre");
+						liste_num1.add(numero_carre_selector_1.getSelectedIndex());
+						liste_num2.add(numero_carre_selector_2.getSelectedIndex());
+						liste_num3.add(numero_carre_selector_3.getSelectedIndex());
+						liste_num4.add(numero_carre_selector_4.getSelectedIndex());
 					}
 					if(sizain_button.isSelected()){
 						partie.MiserSizain(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), sizain_selector.getSelectedIndex()+1);
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + sizain_selector.getSelectedItem());
+						liste_mise.add("sizain");
+						liste_num1.add(sizain_selector.getSelectedIndex()+1);
+						liste_num2.add(-1);
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					if(douzaine_button.isSelected()){
 						partie.MiserDouzaine(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), douzaine_selector.getSelectedIndex()+1);
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + douzaine_selector.getSelectedItem());
+						liste_mise.add("douzaine");
+						liste_num1.add(douzaine_selector.getSelectedIndex()+1);
+						liste_num2.add(-1);
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					if(colonne_button.isSelected()){
 						partie.MiserColonne(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), colonne_selector.getSelectedIndex()+1);
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + colonne_selector.getSelectedItem());
+						liste_mise.add("colonne");
+						liste_num1.add(colonne_selector.getSelectedIndex()+1);
+						liste_num2.add(-1);
+						liste_num3.add(-1);
+						liste_num4.add(-1);
 					}
 					solde.setText(Integer.toString(partie.solde_compte()));
-					liste_mise.add(Integer.parseInt(mise.getText()));
+					liste_somme.add(Integer.parseInt(mise.getText()));
+					liste_bille.add(num_bille_selector.getSelectedIndex());
 				}
 				
 			}
@@ -345,32 +426,47 @@ public class Partie extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				partie.ajouter(liste_mise.get(list.getSelectedIndex()));
+				int i = list.getSelectedIndex();
+				if(liste_mise.get(i) == "pair")partie.MiserPair(liste_bille.get(i), 0);
+				if(liste_mise.get(i) == "impair")partie.MiserImpair(liste_bille.get(i), 0);
+				if(liste_mise.get(i) == "passe")partie.MiserPasse(liste_bille.get(i), 0);
+				if(liste_mise.get(i) == "manque")partie.MiserManque(liste_bille.get(i), 0);
+				if(liste_mise.get(i) == "numero")partie.MiserNumero(liste_bille.get(i), 0, liste_num1.get(i));
+				if(liste_mise.get(i) == "transversale")partie.MiserTransversale(liste_bille.get(i), 0, liste_num1.get(i));
+				if(liste_mise.get(i) == "cheval")partie.MiserCheval(liste_bille.get(i), 0, liste_num1.get(i), liste_num2.get(i));
+				if(liste_mise.get(i) == "transversale")partie.MiserTransversale(liste_bille.get(i), 0, liste_num1.get(i));
+				if(liste_mise.get(i) == "carre")partie.MiserCarre(liste_bille.get(i), 0, liste_num1.get(i), liste_num2.get(i), liste_num3.get(i), liste_num4.get(i));
+				if(liste_mise.get(i) == "sizain")partie.MiserSizain(liste_bille.get(i), 0, liste_num1.get(i));
+				if(liste_mise.get(i) == "douzaine")partie.MiserDouzaine(liste_bille.get(i), 0, liste_num1.get(i));
+				if(liste_mise.get(i) == "colonne")partie.MiserColonne(liste_bille.get(i), 0, liste_num1.get(i));
+				
+				partie.ajouter(liste_somme.get(i));
 				solde.setText(Integer.toString(partie.solde_compte()));
-				liste_mise.remove(list.getSelectedIndex());
-				listmodel.remove(list.getSelectedIndex());
+				liste_somme.remove(i);
+				listmodel.remove(i);
+				liste_mise.remove(i);
+				liste_bille.remove(i);
+				liste_num1.remove(i);
+				liste_num2.remove(i);
+				liste_num3.remove(i);
+				liste_num4.remove(i);
 			}
 		};
 		return s;
 	}
 	
-	public void afficher_billes(final int num_bille){
-		
-		GridBagConstraints c = new GridBagConstraints();
-		c.gridx = num_bille;
-		c.insets = new Insets(10, 10, 10, 10);
-		
-		JLabel nom_bille = new JLabel("Bille " + (num_bille+1));
-		tab.add(nom_bille,c);
-		
-		JLabel couleur = new JLabel(liste_couleur.get(num_bille));
-		tab.add(couleur,c);
-		
-		JLabel taille = new JLabel(liste_taille.get(num_bille));
-		tab.add(taille, c);
+	public ActionListener tourner_listener(){
+		ActionListener s = new ActionListener() {
 			
-		JLabel vitesse = new JLabel(liste_vitesse.get(num_bille));
-		tab.add(vitesse,c);
-	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gain.setText(Integer.toString(partie.CalculerGain(Partie.this))) ;
+				solde.setText(Integer.toString(partie.solde_compte()));
+				listmodel.removeAllElements();
+				partie.RemettreZero();
+				
+			}
+		};
+		return s;
 	}
 }

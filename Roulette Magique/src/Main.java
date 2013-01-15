@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-
 import IHM.Fenetre;
-import POO.Jeu;
 
 
 public class Main {

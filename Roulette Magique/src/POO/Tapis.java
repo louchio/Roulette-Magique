@@ -117,7 +117,6 @@ public class Tapis {
 		for(int i=0; i<37; i++){
 			for(int j=0; j<37; j++){
 				if((num_tombe == i || num_tombe == j) && tab_cheval[i][j] != null){
-					System.out.println(i + ";"+ j);
 					gain = gain + ((17 * tab_cheval[i][j]) + tab_cheval[i][j]);
 				}
 			}
@@ -253,4 +252,39 @@ public class Tapis {
 		
 		return gain;
 	}
+
+	public void remettre_a_zero(){
+		for(int i=0 ; i<41; i++){
+			tab[i].setMise(0);
+		}
+		for(int i=0; i<37; i++){
+			for(int j=0; j<37; j++){
+					tab_cheval[i][j] = 0;
+			}
+		}
+		for(int i=0 ; i<13; i++){
+			tab_transversale[i] = 0;
+		}
+		for(int i=0; i<37; i++){
+			for(int j=0; j<37; j++){
+				for(int k=0; k<37; k++){
+					for(int l=0; l<37; l++){
+						tab_carre[i][j][k][l] = 0;
+					}
+				}
+			}
+		}
+		for(int i=0 ; i<7; i++){
+			tab_sizain[i] = 0;
+		}
+		for(int i=0 ; i<4; i++){
+			tab_douzaine[i] = 0;
+			tab_colonne[i] = 0;
+		}
+		
+		
+	
+		
+	}
+	
 }
