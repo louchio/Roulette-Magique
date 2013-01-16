@@ -186,7 +186,16 @@ public class Jeu {
 	}
 
 	public int CalculerGain(Partie p) {
-		ArrayList<Integer> num_tombe = r1.Tourner_roue();
+		ArrayList<Integer> num_tombe = r1.TournerRoue();
+		for(int i = 0; i< nb_billes; i++){
+			for(int j=0; j< nb_billes; j++){
+				if(i!=j){
+					if(num_tombe.get(i)==num_tombe.get(j)){
+						num_tombe.clear();
+						num_tombe = r1.TournerRoue();}
+				}
+			}
+		}
 		int gain = 0;
 		for (int j = 0; j < num_tombe.size(); j++){
 				gain = gain + tapis[j].CalculerGainCase(num_tombe.get(j));
@@ -208,7 +217,6 @@ public class Jeu {
 				}
 		}
 		j1.Ajouter(gain);
-		System.out.println("Solde j1 :" + j1.getCompte());
 		return gain;
 	}
 

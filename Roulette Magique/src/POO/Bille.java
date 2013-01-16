@@ -14,7 +14,7 @@ public class Bille {
 		this.setCouleur(couleur);
 		this.setTaille(taille); 
 		this.setVitesse(vitesse);
-		System.out.println("Bille " + num_bille + ":" + couleur + "," + taille + "," + vitesse);
+		
 	}
 	
 	//Fonctions

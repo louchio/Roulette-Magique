@@ -9,9 +9,12 @@ public class Main {
 //		ArrayList<String>liste_vitesse = new ArrayList<String>();
 //		liste_couleur.add("Bleu");
 //		liste_couleur.add("Bleu");
+//		liste_couleur.add("Bleu");
 //		liste_taille.add("moyenne");
 //		liste_taille.add("grande");
+//		liste_taille.add("grande");
 //		liste_vitesse.add("v");
+//		liste_vitesse.add("er");
 //		liste_vitesse.add("er");
 //		Jeu t1 = new Jeu(liste_couleur, liste_taille, liste_vitesse);
 //		System.out.println(t1.AfficherTapis());
@@ -27,11 +30,10 @@ public class Main {
 ////		t1.MiserSizain(1, 2, 1);
 ////		t1.MiserDouzaine(1, 2, 1);
 ////		t1.MiserColonne(1, 2, 1);
-//		System.out.println("Gain : " + t1.CalculerGain());
+//		System.out.println("Gain : " + t1.CalculerGain(new Partie(liste_couleur, liste_taille, liste_vitesse, new Fenetre())));
 
 		
 		@SuppressWarnings("unused")
 		Fenetre f1 = new Fenetre();
-
 	}
 }

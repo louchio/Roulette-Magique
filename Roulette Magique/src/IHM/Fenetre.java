@@ -4,6 +4,7 @@ package IHM;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -22,7 +23,6 @@ public class Fenetre extends JFrame
 	private ArrayList<String> liste_couleur ;
 	private ArrayList<String> liste_taille;
 	private ArrayList<String> liste_vitesse;
-	
 	public Fenetre()
 	{
 		setTitle("La roulette magique");
@@ -31,10 +31,9 @@ public class Fenetre extends JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setFocusable(true);
-//		setResizable(false);
 		
 		EcouteurNouvellePartie e1 = new EcouteurNouvellePartie(this);
-		EcouteurQuitter e2 = new EcouteurQuitter(this);
+		EcouteurQuitter e2 = new EcouteurQuitter();
 		
 		JMenuBar mb = new JMenuBar();
 		JMenu m = new JMenu("Fichier");
@@ -57,23 +56,21 @@ public class Fenetre extends JFrame
 		
 		setJMenuBar(mb);
 
-		p = new NouvellePartie(this);
-		add(p);
-//		liste_couleur = new ArrayList<String>();
-//		liste_taille = new ArrayList<String>();
-//		liste_vitesse = new ArrayList<String>();
-//		liste_couleur.add("Bleu");
-//		liste_couleur.add("Bleu");
-//		liste_taille.add("moyenne");
-//		liste_taille.add("grande");
-//		liste_vitesse.add("v");
-//		liste_vitesse.add("er");
-//		c = new Partie(liste_couleur, liste_taille, liste_vitesse, this);
-//		add(c);
+//		p = new NouvellePartie(this);
+//		add(p);
+		 liste_couleur = new ArrayList<String>();
+		 liste_taille = new ArrayList<String>();
+		 liste_vitesse = new ArrayList<String>();
+		 liste_couleur.add("Bleu");
+		 liste_couleur.add("Bleu");
+		 liste_taille.add("moyenne");
+		 liste_taille.add("grande");
+		 liste_vitesse.add("v");
+		 liste_vitesse.add("er");
+		 c = new Partie(liste_couleur, liste_taille, liste_vitesse, this);
+		 add(c);
 		setVisible(true);
 	}
 	
-	public void Frame_ChoixBilles(ChoixBilles c){
-		
-	}
+
 }

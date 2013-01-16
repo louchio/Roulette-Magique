@@ -18,7 +18,7 @@ public class Roue {
 	}
 	
 	//Fonctions
-	public ArrayList<Integer> Tourner_roue(){
+	public ArrayList<Integer> TournerRoue(){
 		ArrayList<Integer> l = new ArrayList<Integer>();
 		for( int i = 0; i < nb_billes; i++){
 			l.add(tab[i].LancerBille());
