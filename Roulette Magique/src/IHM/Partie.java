@@ -63,9 +63,9 @@ public class Partie extends JPanel{
 	private JComboBox<Integer> numero_cheval_selector_2 = new JComboBox<Integer>();
 	private JComboBox<String> transversale_selector = new JComboBox<String>(new String[]{"1,2,3","4,5,6","7,8,9","10,11,12","13,14,15","16,17,18","19,20,21","22,23,24","25,26,27","28,29,30","31,32,33","34,35,36"});
 	private JComboBox<Integer> numero_carre_selector_1 = new JComboBox<Integer>(liste_numero);
-	private JComboBox<Integer> numero_carre_selector_2 = new JComboBox<Integer>(liste_numero);
-	private JComboBox<Integer> numero_carre_selector_3 = new JComboBox<Integer>(liste_numero);
-	private JComboBox<Integer> numero_carre_selector_4 = new JComboBox<Integer>(liste_numero);
+	private JComboBox<Integer> numero_carre_selector_2 = new JComboBox<Integer>();
+	private JComboBox<Integer> numero_carre_selector_3 = new JComboBox<Integer>();
+	private JComboBox<Integer> numero_carre_selector_4 = new JComboBox<Integer>();
 	private JComboBox<String> sizain_selector = new JComboBox<String>(new String[] {"1-6","7-12","13-18","19-24","25-30","31-36"});
 	private JComboBox<String> douzaine_selector = new JComboBox<String>(new String[] {"1-12","13-24","26-36"});
 	private JComboBox<String> colonne_selector = new JComboBox<String>(new String[] {"Colonne 1", "Colonne 2", "Colonne 3"});
@@ -80,6 +80,9 @@ public class Partie extends JPanel{
 	public JLabel num_tombe_bille3 = new JLabel("0");
 	public JLabel num_tombe_bille4 = new JLabel("0");
 	JLabel gain = new JLabel("0");
+	
+	private int acces2 ;
+	private int acces3 ;
 	
 	//Constructeurs
 	public Partie(ArrayList<String> liste_couleur, ArrayList<String> liste_taille, ArrayList<String> liste_vitesse, Fenetre f1){
@@ -143,6 +146,12 @@ public class Partie extends JPanel{
 		carre_selector.add(numero_carre_selector_2);
 		carre_selector.add(numero_carre_selector_3);
 		carre_selector.add(numero_carre_selector_4);
+		numero_carre_selector_2.setEnabled(true);
+		numero_carre_selector_3.setEnabled(true);
+		numero_carre_selector_4.setEnabled(true);
+		
+		numero_carre_selector_1.addActionListener(carre1_listener());
+//		numero_carre_selector_2.addActionListener(carre2_listener());
 			
 		chance_multiple.add("numero", numero_selector);
 		chance_multiple.add("cheval", cheval_selector);
@@ -313,6 +322,91 @@ public class Partie extends JPanel{
 					}
 				}
 				
+			}
+		};
+		return s;
+	}
+	
+	public ActionListener carre1_listener(){
+		ActionListener s = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				acces2 =0;
+				
+				numero_carre_selector_2.setEnabled(false);
+				numero_carre_selector_3.setEnabled(false);
+				numero_carre_selector_4.setEnabled(false);
+
+				
+				numero_carre_selector_2.removeAllItems();
+				numero_carre_selector_3.removeAllItems();
+				numero_carre_selector_4.removeAllItems();
+				for(int i = 0 ; i < 37; i++){
+					if(TestCarre(i, (Integer) numero_carre_selector_1.getSelectedItem())){
+						
+							numero_carre_selector_2.addItem(i);
+					
+					}
+					
+				}
+				acces2 = 1;
+				numero_carre_selector_2.addActionListener(carre2_listener());
+				numero_carre_selector_2.setEnabled(true);
+			}
+		};
+		return s;
+	}
+	
+	public ActionListener carre2_listener(){
+		ActionListener s = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(acces2 == 1){
+					acces3 = 0;
+					numero_carre_selector_3.setEnabled(false);
+					numero_carre_selector_4.setEnabled(false);
+					numero_carre_selector_3.removeAllItems();
+					numero_carre_selector_4.removeAllItems();
+					for(int i = 0 ; i < 37; i++){
+						if(TestCarre(i, (Integer) numero_carre_selector_1.getSelectedItem())){
+							if(TestCarre(i, (Integer) numero_carre_selector_2.getSelectedItem())){
+								numero_carre_selector_3.addItem(i);
+							}
+						}
+					}
+				}
+				acces3 = 1;
+				numero_carre_selector_3.setEnabled(true);
+				numero_carre_selector_3.addActionListener(carre3_listener());
+			}
+		};
+		return s;
+	}
+	
+	public ActionListener carre3_listener(){
+		ActionListener s = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(acces3 == 1 & acces2 ==1){
+					numero_carre_selector_4.setEnabled(false);
+					numero_carre_selector_4.removeAllItems();
+					for(int i = 0 ; i < 37; i++){
+						if(TestCarre(i, (Integer) numero_carre_selector_1.getSelectedItem())){
+							if(TestCarre(i, (Integer) numero_carre_selector_2.getSelectedItem())){
+								if(TestCarre(i, (Integer) numero_carre_selector_3.getSelectedItem())){
+									numero_carre_selector_4.addItem(i);
+								}
+							}
+						}
+					}
+				}
+				numero_carre_selector_4.setEnabled(true);
 			}
 		};
 		return s;
@@ -541,7 +635,7 @@ public class Partie extends JPanel{
 				tapis[x][y]=temp;
 				temp = temp +1;
 			}
-		}		
+		}
 	}
 	
 	public boolean TestCheval(int x1, int x2){
@@ -589,4 +683,63 @@ public class Partie extends JPanel{
 		return false;
 		
 	}
+	
+	public boolean TestCarre(int x1, int x2){
+		for(int y=0; y<13; y++){
+			for(int x=0; x<3; x++){
+				if(tapis[x][y] == x1){
+					if(x1!=x2){
+						if(y==0){
+							if(x==0){
+								if(tapis[x+1][y] == x2 || tapis[x][y+1] == x2 || tapis[x+1][y+1] == x2)return true;
+							}
+							else if(x==2){
+								if(tapis[x-1][y] == x2 || tapis[x][y+1] == x2 || tapis[x-1][y+1] == x2)return true;
+							}
+							else{
+								if(tapis[x-1][y] == x2 || tapis[x+1][y] == x2 || tapis[x][y+1] == x2 || tapis[x-1][y+1] == x2 || tapis[x+1][y+1] == x2)return true;
+							}
+						}
+						else if(y==12){
+							if(x==0){
+								if(tapis[x+1][y] == x2 || tapis[x][y-1] == x2 || tapis[x+1][y-1] == x2)return true;
+							}
+							else if(x==2){
+								if(tapis[x-1][y] == x2 || tapis[x][y-1] == x2 || tapis[x-1][y-1] == x2)return true;
+							}
+							else{
+								if(tapis[x-1][y] == x2 || tapis[x+1][y] == x2 || tapis[x][y-1] == x2 || tapis[x-1][y-1] == x2 || tapis[x+1][y-1] == x2)return true;
+							}
+						}
+						else if(x==0){
+								if(tapis[x+1][y] == x2 || tapis[x][y-1] == x2 || tapis[x][y+1] == x2 || tapis[x+1][y-1] == x2 || tapis[x+1][y+1] == x2)return true;
+						}
+						else if(x==2){
+							if(tapis[x-1][y] == x2 || tapis[x][y-1] == x2 || tapis[x][y+1] == x2 || tapis[x-1][y-1] == x2 || tapis[x-1][y+1] == x2)return true;
+						}
+						else{
+							if(tapis[x-1][y] == x2 || tapis[x+1][y] == x2 || tapis[x][y-1] == x2 || tapis[x][y+1] == x2 || tapis[x-1][y-1] == x2 || tapis[x-1][y+1] == x2|| tapis[x+1][y-1] == x2|| tapis[x+1][y+1] == x2)return true;
+						}
+					}
+
+				}
+			}
+		}
+		
+		return false;
+		
+	}
+
+	public boolean Exist(int x, JComboBox<Integer> e){
+		for(int i = 0 ; i < e.getItemCount(); i++){
+			if(e.getItemAt(i).equals(x)){
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+
+
 }
