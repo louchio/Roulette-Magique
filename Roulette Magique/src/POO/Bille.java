@@ -21,7 +21,6 @@ public class Bille {
 	public int LancerBille(){
 		java.util.Random rand = new java.util.Random();
 	    int leNombreAleatoire = rand.nextInt(36);
-	    System.out.println("Bille " + num_bille +" = " + leNombreAleatoire);
 	    return leNombreAleatoire;
 	}
 	

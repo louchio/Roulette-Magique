@@ -2,6 +2,7 @@ package IHM;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -28,6 +29,7 @@ public class NouvellePartie extends JPanel
 		
 		setLayout(new BorderLayout());
 		tab.setLayout(new GridBagLayout());
+		
 		
 		
 /*____________________________________________________________________________________________

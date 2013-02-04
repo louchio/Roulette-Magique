@@ -3,6 +3,7 @@ package IHM;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -56,19 +57,19 @@ public class Fenetre extends JFrame
 		
 		setJMenuBar(mb);
 
-//		p = new NouvellePartie(this);
-//		add(p);
-		 liste_couleur = new ArrayList<String>();
-		 liste_taille = new ArrayList<String>();
-		 liste_vitesse = new ArrayList<String>();
-		 liste_couleur.add("Bleu");
-		 liste_couleur.add("Bleu");
-		 liste_taille.add("moyenne");
-		 liste_taille.add("grande");
-		 liste_vitesse.add("v");
-		 liste_vitesse.add("er");
-		 c = new Partie(liste_couleur, liste_taille, liste_vitesse, this);
-		 add(c);
+		p = new NouvellePartie(this);
+		add(p);
+//		 liste_couleur = new ArrayList<String>();
+//		 liste_taille = new ArrayList<String>();
+//		 liste_vitesse = new ArrayList<String>();
+//		 liste_couleur.add("Bleu");
+//		 liste_couleur.add("Bleu");
+//		 liste_taille.add("moyenne");
+//		 liste_taille.add("grande");
+//		 liste_vitesse.add("v");
+//		 liste_vitesse.add("er");
+//		 c = new Partie(liste_couleur, liste_taille, liste_vitesse, this);
+//		 add(c);
 		setVisible(true);
 	}
 	

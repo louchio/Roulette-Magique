@@ -2,6 +2,7 @@ package IHM;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,7 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -29,12 +33,12 @@ import javax.swing.SwingUtilities;
 import POO.Jeu;
 
 @SuppressWarnings("serial")
-public class Partie extends JPanel{
+public class Partie extends JPanel implements Observer{
 	
 	//Attributs
-	private Fenetre f1;
+	public Fenetre f1;
 	private Integer [][] tapis = new Integer[3][13];
- 	private int nb_billes;
+ 	public int nb_billes;
 	private ArrayList<Integer> liste_somme = new ArrayList<Integer>();
 	private ArrayList<Integer> liste_bille = new ArrayList<Integer>();
 	private ArrayList<Integer> liste_num1 = new ArrayList<Integer>();
@@ -70,9 +74,9 @@ public class Partie extends JPanel{
 	private JComboBox<String> douzaine_selector = new JComboBox<String>(new String[] {"1-12","13-24","26-36"});
 	private JComboBox<String> colonne_selector = new JComboBox<String>(new String[] {"Colonne 1", "Colonne 2", "Colonne 3"});
 	private JComboBox<String> num_bille_selector = new JComboBox<String>();
-	private DefaultListModel<String> listmodel = new DefaultListModel<String>();
+	public DefaultListModel<String> listmodel = new DefaultListModel<String>();
 	private JList<String> list = new JList<String>(listmodel);
-	private JLabel solde;
+	public JLabel solde;
 	private JPopupMenu supprimer_menu;
 	private JMenuItem supprimer;
 	public JLabel num_tombe_bille1 = new JLabel("0");
@@ -83,6 +87,8 @@ public class Partie extends JPanel{
 	
 	private int acces2 ;
 	private int acces3 ;
+	
+	Thread t1;
 	
 	//Constructeurs
 	public Partie(ArrayList<String> liste_couleur, ArrayList<String> liste_taille, ArrayList<String> liste_vitesse, Fenetre f1){
@@ -95,11 +101,14 @@ public class Partie extends JPanel{
 		
 		partie = new Jeu(liste_couleur, liste_taille, liste_vitesse);
 		
+		partie.addObserver(this);
+		
 		setLayout(new BorderLayout());
 		
 		tab.setLayout(new GridBagLayout());
 				
 		tab.add(new JLabel("Type de mise"), positionnement(0, 0, 7, 1));
+		
 				
 		ButtonGroup groupe = new ButtonGroup();
 		groupe.add(numero_button);
@@ -120,7 +129,9 @@ public class Partie extends JPanel{
 		chance_simple_panel.add(impair_button);
 		chance_simple_panel.add(manque_button);
 		chance_simple_panel.add(passe_button);
+
 		tab.add(chance_simple_panel, positionnement(1, 0, 7, 1));
+		
 		
 		tab.add(numero_button, positionnement(2, 0, 1, 1));
 		tab.add(cheval_button, positionnement(2, 1, 1, 1));
@@ -179,7 +190,7 @@ public class Partie extends JPanel{
 		tab.add(new JLabel("Choix Bille :"), positionnement(3, 2, 1, 1));
 		
 		
-		num_bille_selector.addItem("Toute les billes");
+		num_bille_selector.addItem("Toutes");
 		for(int i=0; i<nb_billes; i++){
 			num_bille_selector.addItem("Bille "+(i+1));
 		}
@@ -202,9 +213,8 @@ public class Partie extends JPanel{
 		miser.addActionListener(miser_listener());
 		tourner.addActionListener(tourner_listener());
 		
-		
-		tab.add(miser, positionnement(4, 0, 2, 1));
-		tab.add(tourner, positionnement(4, 3, 2, 1));
+		tab.add(miser, positionnement(4, 0, 4, 1));
+		tab.add(tourner, positionnement(4, 4, 3, 1));
 		
 		JPanel solde_panel = new JPanel();
 		solde_panel.setLayout(new BoxLayout(solde_panel, BoxLayout.X_AXIS));
@@ -220,7 +230,7 @@ public class Partie extends JPanel{
 		c.gridy = 1;
 		c.gridx = 7;
 		c.gridwidth = 1;
-		c.gridheight = 6;
+		c.gridheight = 7;
 		c.insets = new Insets(10, 10, 10, 10);
 		c.fill = GridBagConstraints.BOTH;
 	
@@ -264,9 +274,24 @@ public class Partie extends JPanel{
 		tab.add(nom_bille4,positionnement(5, 3, 1, 1));
 		tab.add(num_tombe_bille4,positionnement(6, 3, 1, 1));
 		
+		JButton ralentir_roue = new JButton("Ralentir Roue");
+		ralentir_roue.addActionListener(ralentir_roue());
+		tab.add(ralentir_roue, positionnement(5, 4, 3, 1));
+		
+		JButton accelerer_roue = new JButton("Accélerrer Roue");
+		accelerer_roue.addActionListener(accelerer_roue());
+		tab.add(accelerer_roue, positionnement(6, 4, 3, 1));
+		
+		
+		JButton arreter_roue = new JButton("Arreter Roue");
+		arreter_roue.addActionListener(areter_roue());
+		tab.add(arreter_roue, positionnement(7, 0, 4, 1));
+		
 		JLabel gain_label = new JLabel("Gain : ");
-		tab.add(gain_label,positionnement(5, 5, 1, 2));
-		tab.add(gain,positionnement(5, 6, 1, 2));
+		tab.add(gain_label,positionnement(7, 4, 1, 2));
+		tab.add(gain,positionnement(7, 5, 1, 2));
+		
+	
 		
 		selectorIsEnable(false);
 		add(tab, BorderLayout.CENTER);
@@ -495,11 +520,11 @@ public class Partie extends JPanel{
 						liste_num4.add(-1);
 					}
 					if(cheval_button.isSelected()){
-						partie.MiserCheval(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), numero_cheval_selector_1.getSelectedIndex(), numero_cheval_selector_2.getSelectedIndex());
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_cheval_selector_1.getSelectedIndex() + "," + numero_cheval_selector_2.getSelectedIndex());
+						partie.MiserCheval(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), (Integer) numero_cheval_selector_1.getSelectedItem(), (Integer) numero_cheval_selector_2.getSelectedItem());
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_cheval_selector_1.getSelectedItem() + "," + numero_cheval_selector_2.getSelectedItem());
 						liste_mise.add("cheval");
-						liste_num1.add(numero_cheval_selector_1.getSelectedIndex());
-						liste_num2.add(numero_cheval_selector_2.getSelectedIndex());
+						liste_num1.add((Integer) numero_cheval_selector_1.getSelectedItem());
+						liste_num2.add((Integer) numero_cheval_selector_2.getSelectedItem());
 						liste_num3.add(-1);
 						liste_num4.add(-1);
 					}
@@ -513,13 +538,13 @@ public class Partie extends JPanel{
 						liste_num4.add(-1);
 					}
 					if(carre_button.isSelected()){
-						partie.MiserCarre(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), numero_carre_selector_1.getSelectedIndex(), numero_carre_selector_2.getSelectedIndex(), numero_carre_selector_3.getSelectedIndex(), numero_carre_selector_4.getSelectedIndex());
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_carre_selector_1.getSelectedIndex() + "," + numero_carre_selector_2.getSelectedIndex() + "," + numero_carre_selector_3.getSelectedIndex() + "," + numero_carre_selector_4.getSelectedIndex());
+						partie.MiserCarre(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), (Integer) numero_carre_selector_1.getSelectedItem(),(Integer) numero_carre_selector_2.getSelectedItem(), (Integer) numero_carre_selector_3.getSelectedItem(), (Integer) numero_carre_selector_4.getSelectedItem());
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + (Integer) numero_carre_selector_1.getSelectedItem() + "," + (Integer) numero_carre_selector_2.getSelectedItem() + "," + (Integer) numero_carre_selector_3.getSelectedItem() + "," + (Integer) numero_carre_selector_4.getSelectedItem());
 						liste_mise.add("carre");
-						liste_num1.add(numero_carre_selector_1.getSelectedIndex());
-						liste_num2.add(numero_carre_selector_2.getSelectedIndex());
-						liste_num3.add(numero_carre_selector_3.getSelectedIndex());
-						liste_num4.add(numero_carre_selector_4.getSelectedIndex());
+						liste_num1.add((Integer) numero_carre_selector_1.getSelectedItem());
+						liste_num2.add((Integer) numero_carre_selector_2.getSelectedItem());
+						liste_num3.add((Integer) numero_carre_selector_3.getSelectedItem());
+						liste_num4.add((Integer) numero_carre_selector_4.getSelectedItem());
 					}
 					if(sizain_button.isSelected()){
 						partie.MiserSizain(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), sizain_selector.getSelectedIndex()+1);
@@ -597,7 +622,19 @@ public class Partie extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gain.setText(Integer.toString(partie.CalculerGain(Partie.this))) ;
+				partie.Tourner();		
+			}
+		};
+		return s;
+	}	
+	
+	public ActionListener areter_roue(){
+		ActionListener s = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				partie.arret = false;
+				gain.setText(Integer.toString(partie.CalculerGain(Partie.this)));
 				solde.setText(Integer.toString(partie.solde_compte()));
 				listmodel.removeAllElements();
 				partie.RemettreZero();
@@ -605,13 +642,38 @@ public class Partie extends JPanel{
 					@SuppressWarnings("unused")
 					Fin_Partie fin = new Fin_Partie(f1);
 					
-				}
-				
+				}		
 			}
 		};
 		return s;
 	}
 
+	public ActionListener ralentir_roue(){
+		ActionListener s = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				partie.vitesse = partie.vitesse + 50;
+				
+			}
+		};
+		return s;
+	}
+	
+	public ActionListener accelerer_roue(){
+		ActionListener s = new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(partie.vitesse > 50){
+					partie.vitesse = partie.vitesse - 50;
+				}
+			
+			}
+		};
+		return s;
+	}
+	
 	public void selectorIsEnable(boolean b){
 		numero_selector.setEnabled(b);
 		numero_cheval_selector_1.setEnabled(b);
@@ -738,6 +800,26 @@ public class Partie extends JPanel{
 		}
 		
 		return false;
+		
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		for(int j = 0; j < partie.num_tombe.size() ; j++){
+			
+			switch (j){
+			case 0:
+				num_tombe_bille1.setText(Integer.toString(partie.num_tombe.get(j)));
+			case 1:
+				num_tombe_bille2.setText(Integer.toString(partie.num_tombe.get(j)));
+			case 2:
+				num_tombe_bille3.setText(Integer.toString(partie.num_tombe.get(j)));
+			case 3:
+				num_tombe_bille4.setText(Integer.toString(partie.num_tombe.get(j)));
+			}
+
+			
+		}
 		
 	}
 

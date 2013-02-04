@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class Roue {
 
 	//Attributs
-	private int nb_billes;
-	private Bille [] tab;
+	private static int nb_billes;
+	private static Bille [] tab;
 	
 	//Constructeur
 	public Roue(ArrayList<String> liste_couleur, ArrayList<String> liste_taille, ArrayList<String> liste_vitesse){
@@ -18,7 +18,7 @@ public class Roue {
 	}
 	
 	//Fonctions
-	public ArrayList<Integer> TournerRoue(){
+	public static ArrayList<Integer> TournerRoue(){
 		ArrayList<Integer> l = new ArrayList<Integer>();
 		for( int i = 0; i < nb_billes; i++){
 			l.add(tab[i].LancerBille());
@@ -35,6 +35,6 @@ public class Roue {
 	}
 
 	public void setNb_billes(int nb_billes) {
-		this.nb_billes = nb_billes;
+		Roue.nb_billes = nb_billes;
 	}
 }

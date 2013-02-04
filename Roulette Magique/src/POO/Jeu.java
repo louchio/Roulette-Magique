@@ -1,17 +1,21 @@
 package POO;
 import java.util.ArrayList;
+import java.util.Observable;
 
 import IHM.Partie;
 
 
-public class Jeu {
+public class Jeu extends Observable {
 
 	// Attributs
 	private Tapis[] tapis;
 	private Joueur j1;
-	private int nb_billes;
+	public int nb_billes;
 	private Roue r1;
-
+	public ArrayList<Integer> num_tombe = new ArrayList<Integer>();
+	public int vitesse = 150;
+	public boolean arret = true;
+	Runnable t1;
 	// Constructeur
 	public Jeu(ArrayList<String> liste_couleur, ArrayList<String> liste_taille, ArrayList<String> liste_vitesse) {
 		nb_billes = liste_couleur.size();
@@ -185,19 +189,43 @@ public class Jeu {
 		}	
 	}
 
-	public int CalculerGain(Partie p) {
-		ArrayList<Integer> num_tombe = r1.TournerRoue();
-		for(int i = 0; i< nb_billes; i++){
-			for(int j=0; j< nb_billes; j++){
-				if(i!=j){
-					if(num_tombe.get(i)==num_tombe.get(j)){
-						num_tombe.clear();
-						num_tombe = r1.TournerRoue();}
+	public void Tourner(){
+		new Thread(){
+			public void run(){
+				
+				while(arret){
+					num_tombe = Roue.TournerRoue();
+					for(int i = 0; i< nb_billes; i++){
+						for(int j=0; j< nb_billes; j++){
+							if(i!=j){
+								if(num_tombe.get(i)==num_tombe.get(j)){
+									num_tombe.clear();
+									num_tombe = Roue.TournerRoue();}
+							}
+						}
+					}
+					setChanged();
+					notifyObservers();
+
+					try {
+						Thread.sleep(vitesse);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				}
+			arret = true;
+			vitesse = 150;
 			}
-		}
+			
+		}.start();
+	}
+	
+	public int CalculerGain(Partie p) {
 		int gain = 0;
 		for (int j = 0; j < num_tombe.size(); j++){
+				System.out.println(num_tombe.get(j));
 				gain = gain + tapis[j].CalculerGainCase(num_tombe.get(j));
 				gain = gain + tapis[j].CalculerGainCheval(num_tombe.get(j));
 				gain = gain + tapis[j].CalculerGainTransversale(num_tombe.get(j));
@@ -205,16 +233,6 @@ public class Jeu {
 				gain = gain + tapis[j].CalculerGainSizain(num_tombe.get(j));
 				gain = gain + tapis[j].CalculerGainDouzaine(num_tombe.get(j));
 				gain = gain + tapis[j].CalculerGainColonne(num_tombe.get(j));
-				switch (j){
-				case 0:
-					p.num_tombe_bille1.setText(Integer.toString(num_tombe.get(j)));
-				case 1:
-					p.num_tombe_bille2.setText(Integer.toString(num_tombe.get(j)));
-				case 2:
-					p.num_tombe_bille3.setText(Integer.toString(num_tombe.get(j)));
-				case 3:
-					p.num_tombe_bille4.setText(Integer.toString(num_tombe.get(j)));
-				}
 		}
 		j1.Ajouter(gain);
 		return gain;
