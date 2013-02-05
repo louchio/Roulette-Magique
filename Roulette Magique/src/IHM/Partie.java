@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,14 +12,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -84,6 +86,7 @@ public class Partie extends JPanel implements Observer{
 	public JLabel num_tombe_bille3 = new JLabel("0");
 	public JLabel num_tombe_bille4 = new JLabel("0");
 	JLabel gain = new JLabel("0");
+	JButton tourner = new JButton("Tourner Roue");
 	
 	private int acces2 ;
 	private int acces3 ;
@@ -91,25 +94,44 @@ public class Partie extends JPanel implements Observer{
 	Thread t1;
 	
 	//Constructeurs
-	public Partie(ArrayList<String> liste_couleur, ArrayList<String> liste_taille, ArrayList<String> liste_vitesse, Fenetre f1){
+	public Partie(int nb_billes, Fenetre f1){
 		
+/*____________________________________________________________________________________________
+			Initialisation partie
+_____________________________________________________________________________________________*/
 		this.f1 = f1;
-		
 		RemplirTapis();
-		
-		nb_billes = liste_couleur.size();
-		
-		partie = new Jeu(liste_couleur, liste_taille, liste_vitesse);
-		
+		this.nb_billes = nb_billes;
+		partie = new Jeu(nb_billes);
 		partie.addObserver(this);
-		
 		setLayout(new BorderLayout());
 		
+/*____________________________________________________________________________________________
+			Initialisation tab : tableau d'organisation de la page
+_____________________________________________________________________________________________*/
 		tab.setLayout(new GridBagLayout());
-				
-		tab.add(new JLabel("Type de mise"), positionnement(0, 0, 7, 1));
+		tab.setBackground(new Color(17, 53, 100));
 		
-				
+/*____________________________________________________________________________________________
+			Ajout image d'un tapis de jeu
+_____________________________________________________________________________________________*/
+		JLabel lab = new JLabel(new ImageIcon(getClass().getResource("tapis.png")));
+		tab.add(lab,positionnement(0, 0, 9, 1));
+		
+/*____________________________________________________________________________________________
+			JPanel Type de mise 
+_____________________________________________________________________________________________*/
+		JPanel type_mise_panel =  new JPanel();
+		type_mise_panel.setLayout(new GridBagLayout());
+		type_mise_panel.setBackground(new Color(161, 185, 243));
+		type_mise_panel.setBorder(BorderFactory.createLineBorder(new Color(0,41,86), 5));
+		
+		//Premiere ligne
+		JLabel titre = new JLabel("Type de mise");
+		titre.setFont(new Font("Arial", Font.PLAIN, 24));
+		type_mise_panel.add(titre, positionnement(0, 0, 7, 1));
+		
+		//Groupe de button pour la selection
 		ButtonGroup groupe = new ButtonGroup();
 		groupe.add(numero_button);
 		groupe.add(cheval_button);
@@ -123,47 +145,67 @@ public class Partie extends JPanel implements Observer{
 		groupe.add(manque_button);
 		groupe.add(passe_button);
 		
+		//Deuxième ligne panel chance simple
 		JPanel chance_simple_panel = new JPanel();
 		chance_simple_panel.setLayout(new BoxLayout(chance_simple_panel, BoxLayout.X_AXIS));
 		chance_simple_panel.add(pair_button);
 		chance_simple_panel.add(impair_button);
 		chance_simple_panel.add(manque_button);
 		chance_simple_panel.add(passe_button);
-
-		tab.add(chance_simple_panel, positionnement(1, 0, 7, 1));
+		type_mise_panel.add(chance_simple_panel, positionnement(1, 0, 7, 1));
 		
+		//Troisième ligne : ajout bouton chance multiple
+		type_mise_panel.add(numero_button, positionnement(2, 0, 1, 1));
+		type_mise_panel.add(cheval_button, positionnement(2, 1, 1, 1));
+		type_mise_panel.add(transversale_button, positionnement(2, 2, 1, 1));
+		type_mise_panel.add(carre_button, positionnement(2, 3, 1, 1));
+		type_mise_panel.add(sizain_button, positionnement(2, 4, 1, 1));
+		type_mise_panel.add(douzaine_button, positionnement(2, 5, 1, 1));
+		type_mise_panel.add(colonne_button, positionnement(2, 6, 1, 1));
 		
-		tab.add(numero_button, positionnement(2, 0, 1, 1));
-		tab.add(cheval_button, positionnement(2, 1, 1, 1));
-		tab.add(transversale_button, positionnement(2, 2, 1, 1));
-		tab.add(carre_button, positionnement(2, 3, 1, 1));
-		tab.add(sizain_button, positionnement(2, 4, 1, 1));
-		tab.add(douzaine_button, positionnement(2, 5, 1, 1));
-		tab.add(colonne_button, positionnement(2, 6, 1, 1));
+		//Gestion couleur boutton
+		pair_button.setBackground(new Color(161, 185, 243));
+		impair_button.setBackground(new Color(161, 185, 243));
+		manque_button.setBackground(new Color(161, 185, 243));
+		passe_button.setBackground(new Color(161, 185, 243));
+		numero_button.setBackground(new Color(161, 185, 243));
+		cheval_button.setBackground(new Color(161, 185, 243));
+		transversale_button.setBackground(new Color(161, 185, 243));
+		carre_button.setBackground(new Color(161, 185, 243));
+		sizain_button.setBackground(new Color(161, 185, 243));
+		douzaine_button.setBackground(new Color(161, 185, 243));
+		colonne_button.setBackground(new Color(161, 185, 243));
+		
+		//Ajout Panel de type de mise au panel principale
+		tab.add(type_mise_panel, positionnement(1, 0, 7, 3));
 
+		
+/*____________________________________________________________________________________________
+		JPanel Chance multiple
+_____________________________________________________________________________________________*/		
 		chance_multiple.setLayout(new CardLayout());
-
+		
+		//Numéro à cheval
 		JPanel cheval_selector = new JPanel();
 		cheval_selector.setLayout(new BoxLayout(cheval_selector, BoxLayout.X_AXIS));
 		cheval_selector.add(numero_cheval_selector_1);
 		cheval_selector.add(numero_cheval_selector_2);
 		numero_cheval_selector_2.setEnabled(false);
-		
 		numero_cheval_selector_1.addActionListener(cheval_listener());
 		
+		//Carré
 		JPanel carre_selector = new JPanel();
 		carre_selector.setLayout(new BoxLayout(carre_selector, BoxLayout.X_AXIS));
 		carre_selector.add(numero_carre_selector_1);
 		carre_selector.add(numero_carre_selector_2);
 		carre_selector.add(numero_carre_selector_3);
 		carre_selector.add(numero_carre_selector_4);
-		numero_carre_selector_2.setEnabled(true);
-		numero_carre_selector_3.setEnabled(true);
-		numero_carre_selector_4.setEnabled(true);
-		
+		numero_carre_selector_2.setEnabled(false);
+		numero_carre_selector_3.setEnabled(false);
+		numero_carre_selector_4.setEnabled(false);
 		numero_carre_selector_1.addActionListener(carre1_listener());
-//		numero_carre_selector_2.addActionListener(carre2_listener());
-			
+		
+		//Ajout différent selector chance multiple
 		chance_multiple.add("numero", numero_selector);
 		chance_multiple.add("cheval", cheval_selector);
 		chance_multiple.add("transversale", transversale_selector);
@@ -172,9 +214,7 @@ public class Partie extends JPanel implements Observer{
 		chance_multiple.add("douzaine", douzaine_selector);
 		chance_multiple.add("colonne", colonne_selector);
 		
-		tab.add(chance_multiple, positionnement(3, 0, 2, 1));
-		
-		
+		//Listener pour le cardLayout 
 		pair_button.addActionListener(cardlayout_simple());
 		impair_button.addActionListener(cardlayout_simple());
 		passe_button.addActionListener(cardlayout_simple());
@@ -187,60 +227,182 @@ public class Partie extends JPanel implements Observer{
 		douzaine_button.addActionListener(cardlayout("douzaine"));
 		colonne_button.addActionListener(cardlayout("colonne"));
 		
-		tab.add(new JLabel("Choix Bille :"), positionnement(3, 2, 1, 1));
 		
+/*____________________________________________________________________________________________
+		JPanel Mise
+_____________________________________________________________________________________________*/			
+		JPanel mise_panel = new JPanel();
+		mise_panel.setLayout(new GridBagLayout());
+		mise_panel.setBackground(new Color(17, 53, 100));
 		
+		//Ajout chance multiple
+		mise_panel.add(chance_multiple, positionnement(0, 0, 2, 1));
+		
+		//Ajout Label Choix Bille
+		JLabel choix_bille = new JLabel("Choix Billes :");
+		mise_panel.add(choix_bille, positionnement(0, 2, 1, 1));
+		choix_bille.setForeground(Color.white);
+		
+		//Ajout selecteur billes
 		num_bille_selector.addItem("Toutes");
 		for(int i=0; i<nb_billes; i++){
 			num_bille_selector.addItem("Bille "+(i+1));
 		}
-		tab.add(num_bille_selector, positionnement(3, 3, 1, 1));
+		mise_panel.add(num_bille_selector, positionnement(0, 3, 1, 1));
 		
+		//Création plus/moins somme mise
 		JButton moins = new JButton("-");
 		mise = new JLabel(Integer.toString(nb_billes*2));
+		mise.setForeground(Color.white);
 		JButton plus = new JButton("+");
 		
+		//Ajout  plus/moins somme mise
 		moins.addActionListener(moins_listener());
 		plus.addActionListener(plus_listener());
 		
-		tab.add(moins, positionnement(3, 4, 1, 1));
-		tab.add(mise, positionnement(3, 5, 1, 1));
-		tab.add(plus, positionnement(3, 6, 1, 1));
+		//Ajout plus/moins somme mise au panel mise
+		mise_panel.add(moins, positionnement(0, 4, 1, 1));
+		mise_panel.add(mise, positionnement(0, 5, 1, 1));
+		mise_panel.add(plus, positionnement(0, 6, 1, 1));
 		
+		//Ajout panel mise au panel tab
+		tab.add(mise_panel, positionnement(4, 0, 7, 1));
+		
+/*____________________________________________________________________________________________
+		Cinquième ligne bouton Miser et gain
+_____________________________________________________________________________________________*/			
+		
+		//Ajout Bouton Miser
 		JButton miser = new JButton("Miser");
-		JButton tourner = new JButton("Tourner Roue");
-		
 		miser.addActionListener(miser_listener());
+		tab.add(miser, positionnement(5, 0, 4, 1));
+		
+		//Ajout Gain
+		JPanel gain_panel = new JPanel();
+		gain_panel.setLayout(new GridBagLayout());
+		gain_panel.setBackground(new Color(17, 53, 100));
+		
+		JLabel gain_label = new JLabel("Gain : ");
+		gain_label.setFont(new Font("Arial", Font.PLAIN, 24));
+		gain_label.setForeground(Color.white);
+		gain.setForeground(Color.white);
+		gain.setFont(new Font("Arial", Font.BOLD, 24));
+		gain_panel.add(gain_label,positionnement(0, 0, 1, 1));
+		gain_panel.add(gain,positionnement(0, 1, 1, 1));
+		tab.add(gain_panel,positionnement(5, 4, 3, 1));
+		
+/*____________________________________________________________________________________________
+		Panel Billes
+_____________________________________________________________________________________________*/	
+		//Création Panel Billes
+		JPanel billes_panel = new JPanel();
+		billes_panel.setLayout(new GridBagLayout());
+		billes_panel.setMinimumSize(new Dimension(300, 150));
+		billes_panel.setPreferredSize(new Dimension(300, 150));
+		billes_panel.setBackground(new Color(161, 185, 243));
+		billes_panel.setBorder(BorderFactory.createLineBorder(new Color(0,41,86), 5));
+		
+		//Bille 1
+		JLabel nom_bille1 = new JLabel("Bille 1");
+		billes_panel.add(nom_bille1,positionnement(0, 0, 1, 1));
+		billes_panel.add(num_tombe_bille1,positionnement(1, 0, 1, 1));
+		
+		//Bille 2
+		JLabel nom_bille2 = new JLabel("Bille 2");
+		if(nb_billes < 2){nom_bille2.setVisible(false);num_tombe_bille2.setVisible(false);}
+		billes_panel.add(nom_bille2,positionnement(0, 1, 1, 1));
+		billes_panel.add(num_tombe_bille2,positionnement(1, 1, 1, 1));
+		
+		//Bille 3
+		JLabel nom_bille3 = new JLabel("Bille 3");
+		if(nb_billes < 3){nom_bille3.setVisible(false);num_tombe_bille3.setVisible(false);}
+		billes_panel.add(nom_bille3,positionnement(0, 2, 1, 1));
+		billes_panel.add(num_tombe_bille3,positionnement(1, 2, 1, 1));
+		
+		//Bille 4
+		JLabel nom_bille4 = new JLabel("Bille 4");
+		if(nb_billes < 4){nom_bille4.setVisible(false);num_tombe_bille4.setVisible(false);}
+		billes_panel.add(nom_bille4,positionnement(0, 3, 1, 1));
+		billes_panel.add(num_tombe_bille4,positionnement(1, 3, 1, 1));
+		
+		//Bouton Arreter Roue
+		JButton arreter_roue = new JButton("Arreter Roue");
+		arreter_roue.addActionListener(areter_roue());
+		billes_panel.add(arreter_roue, positionnement(2, 0, 4, 1));
+		
+		//Ajout Bille panel au panel tab
+		tab.add(billes_panel, positionnement(6, 0, 4, 3));
+
+		
+/*____________________________________________________________________________________________
+		Panel Roue
+_____________________________________________________________________________________________*/	
+		//Création Panel Roue
+		JPanel roue_panel = new JPanel();
+		roue_panel.setLayout(new GridBagLayout());
+		roue_panel.setBackground(new Color(17, 53, 100));
+		
+		//Ajout Bouton Tourner
 		tourner.addActionListener(tourner_listener());
+		roue_panel.add(tourner, positionnement(0, 0, 1, 1));
 		
-		tab.add(miser, positionnement(4, 0, 4, 1));
-		tab.add(tourner, positionnement(4, 4, 3, 1));
+		//Ajout Bouton Ralentir Roue
+		JButton ralentir_roue = new JButton("Ralentir Roue");
+		ralentir_roue.addActionListener(ralentir_roue());
+		roue_panel.add(ralentir_roue, positionnement(1, 0, 1, 1));
 		
+		//Ajout Bouton Accelerer
+		JButton accelerer_roue = new JButton("Accélerrer Roue");
+		accelerer_roue.addActionListener(accelerer_roue());
+		roue_panel.add(accelerer_roue, positionnement(2, 0, 1, 1));
+		
+		//Ajout Roue Panel au panel tab
+		tab.add(roue_panel, positionnement(6, 4, 3, 3));
+
+		
+/*____________________________________________________________________________________________
+		Colonne de droite Solde compte et tableau des mises
+_____________________________________________________________________________________________*/	
+		//Panel Solde
 		JPanel solde_panel = new JPanel();
+		solde_panel.setBackground(new Color(17, 53, 100));
 		solde_panel.setLayout(new BoxLayout(solde_panel, BoxLayout.X_AXIS));
-		solde_panel.add(new JLabel("Solde : "));
+		JLabel titre_solde = new JLabel("Solde = ");
+		titre_solde.setFont(new Font("Arial", Font.PLAIN, 24));
+		titre_solde.setForeground(Color.WHITE);
+		solde_panel.add(titre_solde);
 		solde = new JLabel(Integer.toString(partie.solde_compte()));
+		solde.setFont(new Font("Arial", Font.BOLD, 24));
+		solde.setForeground(Color.white);
 		solde_panel.add(solde);
-		tab.add(solde_panel, positionnement(0, 7, 1, 1));
+		tab.add(solde_panel, positionnement(1, 7, 1, 1));
 		
+		//Ajout ScrollPane a la liste des mises
 		JScrollPane p = new JScrollPane(list);
 		p.setMinimumSize(new Dimension(230, 10));
 		p.setPreferredSize(new Dimension(230, 10));
+		list.setBackground(new Color(161, 185, 243));
+		p.setBorder(BorderFactory.createLineBorder(new Color(0,41,86), 5));
+		
+		//Nouvelle contraintes de construction pour la liste
 		GridBagConstraints c = new GridBagConstraints();
-		c.gridy = 1;
+		c.gridy = 2;
 		c.gridx = 7;
 		c.gridwidth = 1;
 		c.gridheight = 7;
 		c.insets = new Insets(10, 10, 10, 10);
 		c.fill = GridBagConstraints.BOTH;
-	
+		
+		//Ajout liste au panel Tab
 		tab.add(p,c);
 		
+		//Création Popup pour supprimer une mise
 		supprimer_menu = new JPopupMenu();
 		supprimer = new JMenuItem("Supprimer");
 		supprimer_menu.add(supprimer);
 		supprimer.addActionListener(supprimer_listener());
-
+		
+		//Listener Souris suppression mise
 		list.addMouseListener(new MouseAdapter(){
 
 	        public void mousePressed(MouseEvent e) {
@@ -253,51 +415,20 @@ public class Partie extends JPanel implements Observer{
 
 	        } 
 
-	    }); 
+	    }); 	
 		
-		JLabel nom_bille1 = new JLabel("Bille 1");
-		tab.add(nom_bille1,positionnement(5, 0, 1, 1));
-		tab.add(num_tombe_bille1,positionnement(6, 0, 1, 1));
-		
-		JLabel nom_bille2 = new JLabel("Bille 2");
-		if(nb_billes < 2){nom_bille2.setVisible(false);num_tombe_bille2.setVisible(false);}
-		tab.add(nom_bille2,positionnement(5, 1, 1, 1));
-		tab.add(num_tombe_bille2,positionnement(6, 1, 1, 1));
-		
-		JLabel nom_bille3 = new JLabel("Bille 3");
-		if(nb_billes < 3){nom_bille3.setVisible(false);num_tombe_bille3.setVisible(false);}
-		tab.add(nom_bille3,positionnement(5, 2, 1, 1));
-		tab.add(num_tombe_bille3,positionnement(6, 2, 1, 1));
-		
-		JLabel nom_bille4 = new JLabel("Bille 4");
-		if(nb_billes < 4){nom_bille4.setVisible(false);num_tombe_bille4.setVisible(false);}
-		tab.add(nom_bille4,positionnement(5, 3, 1, 1));
-		tab.add(num_tombe_bille4,positionnement(6, 3, 1, 1));
-		
-		JButton ralentir_roue = new JButton("Ralentir Roue");
-		ralentir_roue.addActionListener(ralentir_roue());
-		tab.add(ralentir_roue, positionnement(5, 4, 3, 1));
-		
-		JButton accelerer_roue = new JButton("Accélerrer Roue");
-		accelerer_roue.addActionListener(accelerer_roue());
-		tab.add(accelerer_roue, positionnement(6, 4, 3, 1));
-		
-		
-		JButton arreter_roue = new JButton("Arreter Roue");
-		arreter_roue.addActionListener(areter_roue());
-		tab.add(arreter_roue, positionnement(7, 0, 4, 1));
-		
-		JLabel gain_label = new JLabel("Gain : ");
-		tab.add(gain_label,positionnement(7, 4, 1, 2));
-		tab.add(gain,positionnement(7, 5, 1, 2));
-		
-	
-		
+/*____________________________________________________________________________________________
+		Ajout tab au panel 
+_____________________________________________________________________________________________*/	
 		selectorIsEnable(false);
 		add(tab, BorderLayout.CENTER);
 	}
+	
+	
 
-	//Fonctions
+/*____________________________________________________________________________________________
+	Fonctions
+_____________________________________________________________________________________________*/	
 	public GridBagConstraints positionnement(int y, int x, int largeur, int hauteur){
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridy = y;
@@ -327,8 +458,10 @@ public class Partie extends JPanel implements Observer{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				selectorIsEnable(false);
-				
-				
+				numero_carre_selector_2.setEnabled(false);
+				numero_carre_selector_3.setEnabled(false);
+				numero_carre_selector_4.setEnabled(false);
+				numero_cheval_selector_2.setEnabled(false);
 			}
 		};
 		return s;
@@ -430,6 +563,7 @@ public class Partie extends JPanel implements Observer{
 							}
 						}
 					}
+					if(numero_carre_selector_4.getItemAt(0) == null){numero_carre_selector_4.addItem(0);}
 				}
 				numero_carre_selector_4.setEnabled(true);
 			}
@@ -511,7 +645,7 @@ public class Partie extends JPanel implements Observer{
 						liste_num4.add(-1);
 					}
 					if(numero_button.isSelected()){
-						partie.MiserNumero(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), num_bille_selector.getSelectedIndex());
+						partie.MiserNumero(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), numero_selector.getSelectedIndex());
 						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_selector.getSelectedIndex());
 						liste_mise.add("numero");
 						liste_num1.add(num_bille_selector.getSelectedIndex());
@@ -520,13 +654,15 @@ public class Partie extends JPanel implements Observer{
 						liste_num4.add(-1);
 					}
 					if(cheval_button.isSelected()){
-						partie.MiserCheval(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), (Integer) numero_cheval_selector_1.getSelectedItem(), (Integer) numero_cheval_selector_2.getSelectedItem());
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_cheval_selector_1.getSelectedItem() + "," + numero_cheval_selector_2.getSelectedItem());
-						liste_mise.add("cheval");
-						liste_num1.add((Integer) numero_cheval_selector_1.getSelectedItem());
-						liste_num2.add((Integer) numero_cheval_selector_2.getSelectedItem());
-						liste_num3.add(-1);
-						liste_num4.add(-1);
+						if(numero_cheval_selector_1.isEnabled() && numero_cheval_selector_2.isEnabled() ){
+							partie.MiserCheval(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), ((Integer)numero_cheval_selector_1.getSelectedItem()).intValue(), ((Integer)numero_cheval_selector_2.getSelectedItem()).intValue());
+							listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_cheval_selector_1.getSelectedItem() + "," + numero_cheval_selector_2.getSelectedItem());
+							liste_mise.add("cheval");
+							liste_num1.add((Integer) numero_cheval_selector_1.getSelectedItem());
+							liste_num2.add((Integer) numero_cheval_selector_2.getSelectedItem());
+							liste_num3.add(-1);
+							liste_num4.add(-1);
+						}
 					}
 					if(transversale_button.isSelected()){
 						partie.MiserTransversale(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), transversale_selector.getSelectedIndex()+1);
@@ -538,13 +674,15 @@ public class Partie extends JPanel implements Observer{
 						liste_num4.add(-1);
 					}
 					if(carre_button.isSelected()){
-						partie.MiserCarre(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), (Integer) numero_carre_selector_1.getSelectedItem(),(Integer) numero_carre_selector_2.getSelectedItem(), (Integer) numero_carre_selector_3.getSelectedItem(), (Integer) numero_carre_selector_4.getSelectedItem());
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + (Integer) numero_carre_selector_1.getSelectedItem() + "," + (Integer) numero_carre_selector_2.getSelectedItem() + "," + (Integer) numero_carre_selector_3.getSelectedItem() + "," + (Integer) numero_carre_selector_4.getSelectedItem());
-						liste_mise.add("carre");
-						liste_num1.add((Integer) numero_carre_selector_1.getSelectedItem());
-						liste_num2.add((Integer) numero_carre_selector_2.getSelectedItem());
-						liste_num3.add((Integer) numero_carre_selector_3.getSelectedItem());
-						liste_num4.add((Integer) numero_carre_selector_4.getSelectedItem());
+						if(numero_carre_selector_1.isEnabled() && numero_carre_selector_2.isEnabled() && numero_carre_selector_3.isEnabled() && numero_carre_selector_4.isEnabled()){
+							partie.MiserCarre(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), (Integer) numero_carre_selector_1.getSelectedItem(),(Integer) numero_carre_selector_2.getSelectedItem(), (Integer) numero_carre_selector_3.getSelectedItem(), (Integer) numero_carre_selector_4.getSelectedItem());
+							listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + (Integer) numero_carre_selector_1.getSelectedItem() + "," + (Integer) numero_carre_selector_2.getSelectedItem() + "," + (Integer) numero_carre_selector_3.getSelectedItem() + "," + (Integer) numero_carre_selector_4.getSelectedItem());
+							liste_mise.add("carre");
+							liste_num1.add((Integer) numero_carre_selector_1.getSelectedItem());
+							liste_num2.add((Integer) numero_carre_selector_2.getSelectedItem());
+							liste_num3.add((Integer) numero_carre_selector_3.getSelectedItem());
+							liste_num4.add((Integer) numero_carre_selector_4.getSelectedItem());
+						}
 					}
 					if(sizain_button.isSelected()){
 						partie.MiserSizain(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), sizain_selector.getSelectedIndex()+1);
@@ -622,6 +760,7 @@ public class Partie extends JPanel implements Observer{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				tourner.setEnabled(false);
 				partie.Tourner();		
 			}
 		};
@@ -633,16 +772,19 @@ public class Partie extends JPanel implements Observer{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				partie.arret = false;
-				gain.setText(Integer.toString(partie.CalculerGain(Partie.this)));
-				solde.setText(Integer.toString(partie.solde_compte()));
-				listmodel.removeAllElements();
-				partie.RemettreZero();
-				if(partie.solde_compte() < nb_billes*2){
-					@SuppressWarnings("unused")
-					Fin_Partie fin = new Fin_Partie(f1);
-					
-				}		
+				if(!tourner.isEnabled()){
+					partie.arret = false;
+					gain.setText(Integer.toString(partie.CalculerGain(Partie.this)));
+					solde.setText(Integer.toString(partie.solde_compte()));
+					listmodel.removeAllElements();
+					partie.RemettreZero();
+					if(partie.solde_compte() < nb_billes*2){
+						@SuppressWarnings("unused")
+						Fin_Partie fin = new Fin_Partie(f1);
+						
+					}	
+					tourner.setEnabled(true);
+				}
 			}
 		};
 		return s;
@@ -679,9 +821,6 @@ public class Partie extends JPanel implements Observer{
 		numero_cheval_selector_1.setEnabled(b);
 		transversale_selector.setEnabled(b);
 		numero_carre_selector_1.setEnabled(b);
-		numero_carre_selector_2.setEnabled(b);
-		numero_carre_selector_3.setEnabled(b);
-		numero_carre_selector_4.setEnabled(b);
 		sizain_selector.setEnabled(b);
 		douzaine_selector.setEnabled(b);
 		colonne_selector.setEnabled(b);

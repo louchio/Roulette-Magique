@@ -15,16 +15,16 @@ public class Jeu extends Observable {
 	public ArrayList<Integer> num_tombe = new ArrayList<Integer>();
 	public int vitesse = 150;
 	public boolean arret = true;
-	Runnable t1;
+	
 	// Constructeur
-	public Jeu(ArrayList<String> liste_couleur, ArrayList<String> liste_taille, ArrayList<String> liste_vitesse) {
-		nb_billes = liste_couleur.size();
+	public Jeu(int nb_billes) {
+		this.nb_billes = nb_billes;
 		tapis = new Tapis[nb_billes];
 		for (int i = 0; i < nb_billes; i++) {
 			tapis[i] = new Tapis();
 		}
 		j1 = new Joueur();
-		r1 = new Roue(liste_couleur, liste_taille, liste_vitesse);
+		r1 = new Roue(nb_billes);
 	}
 
 	// Fonctions
@@ -194,13 +194,13 @@ public class Jeu extends Observable {
 			public void run(){
 				
 				while(arret){
-					num_tombe = Roue.TournerRoue();
+					num_tombe = r1.TournerRoue();
 					for(int i = 0; i< nb_billes; i++){
 						for(int j=0; j< nb_billes; j++){
 							if(i!=j){
 								if(num_tombe.get(i)==num_tombe.get(j)){
 									num_tombe.clear();
-									num_tombe = Roue.TournerRoue();}
+									num_tombe = r1.TournerRoue();}
 							}
 						}
 					}

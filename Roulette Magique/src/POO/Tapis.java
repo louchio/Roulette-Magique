@@ -29,6 +29,17 @@ public class Tapis {
 		tab_sizain = new Integer [7];
 		tab_douzaine = new Integer [4];
 		tab_colonne = new Integer [4];
+		for(int i = 0; i<37; i++){
+			for(int j = 0 ; j<37; j++){
+				tab_cheval[i][j] = 0;
+				for(int k=0; k<37; k++){
+					for(int l=0; l<37; l++){
+						tab_carre[i][j][k][l]=0;
+					}
+				}
+			}
+		}
+		
 	}
 	
 	//Fonctions
@@ -41,31 +52,31 @@ public class Tapis {
 	}
 	
 	public void MiserCase(int somme, int num){
-		tab[num].setMise(somme);
+		tab[num].setMise(tab[num].getMise()+somme);
 	}
 	
 	public void MiserCheval(int somme, int num1, int num2){
-		tab_cheval[num1][num2] = somme;
+		tab_cheval[num1][num2] = tab_cheval[num1][num2] + somme;
 	}
 	
 	public void MiserTransversale(int somme, int ligne){
-		tab_transversale[ligne] = somme;
+		tab_transversale[ligne] = tab_transversale[ligne] + somme;
 	}
 	
 	public void MiserCarre(int somme, int num1, int num2, int num3, int num4){
-		tab_carre[num1][num2][num3][num4] = somme;
+		tab_carre[num1][num2][num3][num4] = tab_carre[num1][num2][num3][num4] + somme;
 	}
 	
 	public void MiserSizain(int somme, int ligne){
-		tab_sizain[ligne] = somme;
+		tab_sizain[ligne] = tab_sizain[ligne] + somme;
 	}
 	
 	public void MiserDouzaine(int somme, int ligne){
-		tab_douzaine[ligne] = somme;
+		tab_douzaine[ligne] = tab_douzaine[ligne] + somme;
 	}
 	
 	public void MiserColonne(int somme, int colonne){
-		tab_colonne[colonne] = somme;
+		tab_colonne[colonne] = tab_colonne[colonne] + somme;
 	}
 	
 	public int CalculerGainCase(int num_tombe) {

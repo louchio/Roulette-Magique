@@ -27,7 +27,7 @@ public class Fenetre extends JFrame
 	public Fenetre()
 	{
 		setTitle("La roulette magique");
-		setBounds(0, 0, 1000, 600);	
+		setBounds(0, 0, 1000, 800);	
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
