@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import IHM.Partie;
+import IHM.Roue_dynamique;
 
 
 public class Jeu extends Observable {
@@ -189,7 +190,7 @@ public class Jeu extends Observable {
 		}	
 	}
 
-	public void Tourner(){
+	public void Tourner(final Roue_dynamique roue_dyn){
 		new Thread(){
 			public void run(){
 				
@@ -204,6 +205,8 @@ public class Jeu extends Observable {
 							}
 						}
 					}
+					roue_dyn.setAngle(roue_dyn.getAngle()+0.1);
+					roue_dyn.rotation();
 					setChanged();
 					notifyObservers();
 

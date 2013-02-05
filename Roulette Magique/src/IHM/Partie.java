@@ -12,10 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -87,6 +89,8 @@ public class Partie extends JPanel implements Observer{
 	public JLabel num_tombe_bille4 = new JLabel("0");
 	JLabel gain = new JLabel("0");
 	JButton tourner = new JButton("Tourner Roue");
+	
+	public Roue_dynamique roue_dyn = new Roue_dynamique();
 	
 	private int acces2 ;
 	private int acces3 ;
@@ -333,6 +337,15 @@ ________________________________________________________________________________
 		//Ajout Bille panel au panel tab
 		tab.add(billes_panel, positionnement(6, 0, 4, 3));
 
+
+/*____________________________________________________________________________________________
+		Panel Roue Dynamique
+_____________________________________________________________________________________________*/	
+		
+		roue_dyn.setMinimumSize(new Dimension(150, 150));
+		roue_dyn.setPreferredSize(new Dimension(150, 150));
+		tab.add(roue_dyn, positionnement(6, 4, 2, 3));
+		
 		
 /*____________________________________________________________________________________________
 		Panel Roue
@@ -357,7 +370,7 @@ ________________________________________________________________________________
 		roue_panel.add(accelerer_roue, positionnement(2, 0, 1, 1));
 		
 		//Ajout Roue Panel au panel tab
-		tab.add(roue_panel, positionnement(6, 4, 3, 3));
+		tab.add(roue_panel, positionnement(6, 6, 1, 3));
 
 		
 /*____________________________________________________________________________________________
@@ -761,7 +774,7 @@ ________________________________________________________________________________
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tourner.setEnabled(false);
-				partie.Tourner();		
+				partie.Tourner(roue_dyn);		
 			}
 		};
 		return s;
@@ -784,6 +797,13 @@ ________________________________________________________________________________
 						
 					}	
 					tourner.setEnabled(true);
+					try {
+						roue_dyn.image = ImageIO.read(getClass().getResource("roulette.png"));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					roue_dyn.repaint();
 				}
 			}
 		};
