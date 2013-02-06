@@ -55,10 +55,10 @@ public class Partie extends JPanel implements Observer{
 	private final JPanel chance_multiple = new JPanel();
 	private JLabel mise;
 	private Jeu partie;
-	private JRadioButton numero_button = new JRadioButton("Numéro");
+	private JRadioButton numero_button = new JRadioButton("Numero");
 	private JRadioButton cheval_button = new JRadioButton("Cheval");
 	private JRadioButton transversale_button = new JRadioButton("Transversale");
-	private JRadioButton carre_button = new JRadioButton("Carré");
+	private JRadioButton carre_button = new JRadioButton("Carre");
 	private JRadioButton sizain_button = new JRadioButton("Sizain");
 	private JRadioButton douzaine_button = new JRadioButton("Douzaine");
 	private JRadioButton colonne_button = new JRadioButton("Colonne");
@@ -149,7 +149,7 @@ ________________________________________________________________________________
 		groupe.add(manque_button);
 		groupe.add(passe_button);
 		
-		//DeuxiËme ligne panel chance simple
+		//Deuxi√®me ligne panel chance simple
 		JPanel chance_simple_panel = new JPanel();
 		chance_simple_panel.setBackground(new Color(161, 185, 243));
 		chance_simple_panel.setLayout(new BoxLayout(chance_simple_panel, BoxLayout.X_AXIS));
@@ -159,7 +159,7 @@ ________________________________________________________________________________
 		chance_simple_panel.add(passe_button);
 		type_mise_panel.add(chance_simple_panel, positionnement(1, 0, 7, 1));
 		
-		//TroisiËme ligne : ajout bouton chance multiple
+		//Troisi√®me ligne : ajout bouton chance multiple
 		type_mise_panel.add(numero_button, positionnement(2, 0, 1, 1));
 		type_mise_panel.add(cheval_button, positionnement(2, 1, 1, 1));
 		type_mise_panel.add(transversale_button, positionnement(2, 2, 1, 1));
@@ -191,7 +191,7 @@ ________________________________________________________________________________
 		chance_multiple.setLayout(new CardLayout());
 		chance_multiple.setBackground(new Color(17, 53, 100));
 		
-		//NumÈro ‡ cheval
+		//Num√©ro √† cheval
 		JPanel cheval_selector = new JPanel();
 		cheval_selector.setBackground(new Color(17, 53, 100));
 		cheval_selector.setLayout(new BoxLayout(cheval_selector, BoxLayout.X_AXIS));
@@ -200,7 +200,7 @@ ________________________________________________________________________________
 		numero_cheval_selector_2.setEnabled(false);
 		numero_cheval_selector_1.addActionListener(cheval_listener());
 		
-		//CarrÈ
+		//Carr√©
 		JPanel carre_selector = new JPanel();
 		carre_selector.setBackground(new Color(17, 53, 100));
 		carre_selector.setLayout(new BoxLayout(carre_selector, BoxLayout.X_AXIS));
@@ -213,7 +213,7 @@ ________________________________________________________________________________
 		numero_carre_selector_4.setEnabled(false);
 		numero_carre_selector_1.addActionListener(carre1_listener());
 		
-		//Ajout diffÈrent selector chance multiple
+		//Ajout diff√©rent selector chance multiple
 		chance_multiple.add("numero", numero_selector);
 		chance_multiple.add("cheval", cheval_selector);
 		chance_multiple.add("transversale", transversale_selector);
@@ -258,7 +258,7 @@ ________________________________________________________________________________
 		}
 		mise_panel.add(num_bille_selector, positionnement(0, 3, 1, 1));
 		
-		//CrÈation plus/moins somme mise
+		//Cr√©ation plus/moins somme mise
 		JButton moins = new JButton("-");
 		mise = new JLabel(Integer.toString(nb_billes*2));
 		mise.setForeground(Color.white);
@@ -277,7 +277,7 @@ ________________________________________________________________________________
 		tab.add(mise_panel, positionnement(4, 0, 7, 1));
 		
 /*____________________________________________________________________________________________
-		CinquiËme ligne bouton Miser et gain
+		Cinqui√®me ligne bouton Miser et gain
 _____________________________________________________________________________________________*/			
 		
 		//Ajout Bouton Miser
@@ -302,7 +302,7 @@ ________________________________________________________________________________
 /*____________________________________________________________________________________________
 		Panel Billes
 _____________________________________________________________________________________________*/	
-		//CrÈation Panel Billes
+		//Cr√©ation Panel Billes
 		JPanel billes_panel = new JPanel();
 		billes_panel.setLayout(new GridBagLayout());
 		billes_panel.setMinimumSize(new Dimension(300, 150));
@@ -334,7 +334,7 @@ ________________________________________________________________________________
 		billes_panel.add(num_tombe_bille4,positionnement(1, 3, 1, 1));
 		
 		//Bouton Arreter Roue
-		JButton arreter_roue = new JButton("Arrêter Roue");
+		JButton arreter_roue = new JButton("Arreter Roue");
 		arreter_roue.addActionListener(areter_roue());
 		billes_panel.add(arreter_roue, positionnement(2, 0, 4, 1));
 		
@@ -354,7 +354,7 @@ ________________________________________________________________________________
 /*____________________________________________________________________________________________
 		Panel Roue
 _____________________________________________________________________________________________*/	
-		//CrÈation Panel Roue
+		//Cr√©ation Panel Roue
 		JPanel roue_panel = new JPanel();
 		roue_panel.setLayout(new GridBagLayout());
 		roue_panel.setBackground(new Color(17, 53, 100));
@@ -369,7 +369,7 @@ ________________________________________________________________________________
 		roue_panel.add(ralentir_roue, positionnement(1, 0, 1, 1));
 		
 		//Ajout Bouton Accelerer
-		JButton accelerer_roue = new JButton("Accélérer Roue");
+		JButton accelerer_roue = new JButton("Accelerer Roue");
 		accelerer_roue.addActionListener(accelerer_roue());
 		roue_panel.add(accelerer_roue, positionnement(2, 0, 1, 1));
 		
@@ -413,7 +413,7 @@ ________________________________________________________________________________
 		//Ajout liste au panel Tab
 		tab.add(p,c);
 		
-		//CrÈation Popup pour supprimer une mise
+		//Cr√©ation Popup pour supprimer une mise
 		supprimer_menu = new JPopupMenu();
 		supprimer = new JMenuItem("Supprimer");
 		supprimer_menu.add(supprimer);
@@ -627,7 +627,7 @@ ________________________________________________________________________________
 				if(Integer.parseInt(mise.getText()) <= partie.solde_compte()){
 					if(pair_button.isSelected()){
 						partie.MiserPair(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()));
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur Pair");
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur Pair");
 						liste_mise.add("pair");
 						liste_num1.add(-1);
 						liste_num2.add(-1);
@@ -636,7 +636,7 @@ ________________________________________________________________________________
 					}
 					if(impair_button.isSelected()){
 						partie.MiserImpair(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()));
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur Impair");
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur Impair");
 						liste_mise.add("impair");
 						liste_num1.add(-1);
 						liste_num2.add(-1);
@@ -645,7 +645,7 @@ ________________________________________________________________________________
 					}
 					if(manque_button.isSelected()){
 						partie.MiserImpair(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()));
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur Manque");
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur Manque");
 						liste_mise.add("manque");
 						liste_num1.add(-1);
 						liste_num2.add(-1);
@@ -654,7 +654,7 @@ ________________________________________________________________________________
 					}
 					if(passe_button.isSelected()){
 						partie.MiserImpair(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()));
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur Passe");
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur Passe");
 						liste_mise.add("passe");
 						liste_num1.add(-1);
 						liste_num2.add(-1);
@@ -663,7 +663,7 @@ ________________________________________________________________________________
 					}
 					if(numero_button.isSelected()){
 						partie.MiserNumero(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), numero_selector.getSelectedIndex());
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_selector.getSelectedIndex());
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur " + numero_selector.getSelectedIndex());
 						liste_mise.add("numero");
 						liste_num1.add(num_bille_selector.getSelectedIndex());
 						liste_num2.add(-1);
@@ -673,7 +673,7 @@ ________________________________________________________________________________
 					if(cheval_button.isSelected()){
 						if(numero_cheval_selector_1.isEnabled() && numero_cheval_selector_2.isEnabled() ){
 							partie.MiserCheval(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), ((Integer)numero_cheval_selector_1.getSelectedItem()).intValue(), ((Integer)numero_cheval_selector_2.getSelectedItem()).intValue());
-							listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + numero_cheval_selector_1.getSelectedItem() + "," + numero_cheval_selector_2.getSelectedItem());
+							listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur " + numero_cheval_selector_1.getSelectedItem() + "," + numero_cheval_selector_2.getSelectedItem());
 							liste_mise.add("cheval");
 							liste_num1.add((Integer) numero_cheval_selector_1.getSelectedItem());
 							liste_num2.add((Integer) numero_cheval_selector_2.getSelectedItem());
@@ -683,7 +683,7 @@ ________________________________________________________________________________
 					}
 					if(transversale_button.isSelected()){
 						partie.MiserTransversale(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), transversale_selector.getSelectedIndex()+1);
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + transversale_selector.getSelectedItem());
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur " + transversale_selector.getSelectedItem());
 						liste_mise.add("transversale");
 						liste_num1.add(transversale_selector.getSelectedIndex()+1);
 						liste_num2.add(-1);
@@ -693,7 +693,7 @@ ________________________________________________________________________________
 					if(carre_button.isSelected()){
 						if(numero_carre_selector_1.isEnabled() && numero_carre_selector_2.isEnabled() && numero_carre_selector_3.isEnabled() && numero_carre_selector_4.isEnabled()){
 							partie.MiserCarre(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), (Integer) numero_carre_selector_1.getSelectedItem(),(Integer) numero_carre_selector_2.getSelectedItem(), (Integer) numero_carre_selector_3.getSelectedItem(), (Integer) numero_carre_selector_4.getSelectedItem());
-							listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + (Integer) numero_carre_selector_1.getSelectedItem() + "," + (Integer) numero_carre_selector_2.getSelectedItem() + "," + (Integer) numero_carre_selector_3.getSelectedItem() + "," + (Integer) numero_carre_selector_4.getSelectedItem());
+							listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur " + (Integer) numero_carre_selector_1.getSelectedItem() + "," + (Integer) numero_carre_selector_2.getSelectedItem() + "," + (Integer) numero_carre_selector_3.getSelectedItem() + "," + (Integer) numero_carre_selector_4.getSelectedItem());
 							liste_mise.add("carre");
 							liste_num1.add((Integer) numero_carre_selector_1.getSelectedItem());
 							liste_num2.add((Integer) numero_carre_selector_2.getSelectedItem());
@@ -703,7 +703,7 @@ ________________________________________________________________________________
 					}
 					if(sizain_button.isSelected()){
 						partie.MiserSizain(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), sizain_selector.getSelectedIndex()+1);
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + sizain_selector.getSelectedItem());
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur " + sizain_selector.getSelectedItem());
 						liste_mise.add("sizain");
 						liste_num1.add(sizain_selector.getSelectedIndex()+1);
 						liste_num2.add(-1);
@@ -712,7 +712,7 @@ ________________________________________________________________________________
 					}
 					if(douzaine_button.isSelected()){
 						partie.MiserDouzaine(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), douzaine_selector.getSelectedIndex()+1);
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + douzaine_selector.getSelectedItem());
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur " + douzaine_selector.getSelectedItem());
 						liste_mise.add("douzaine");
 						liste_num1.add(douzaine_selector.getSelectedIndex()+1);
 						liste_num2.add(-1);
@@ -721,7 +721,7 @@ ________________________________________________________________________________
 					}
 					if(colonne_button.isSelected()){
 						partie.MiserColonne(num_bille_selector.getSelectedIndex(), Integer.parseInt(mise.getText()), colonne_selector.getSelectedIndex()+1);
-						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "€ sur " + colonne_selector.getSelectedItem());
+						listmodel.addElement(num_bille_selector.getSelectedItem() + " "   + mise.getText() + "‚Ç¨ sur " + colonne_selector.getSelectedItem());
 						liste_mise.add("colonne");
 						liste_num1.add(colonne_selector.getSelectedIndex()+1);
 						liste_num2.add(-1);
