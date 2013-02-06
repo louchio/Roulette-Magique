@@ -13,7 +13,7 @@ public class EcouteurRegle implements ActionListener {
 
             Desktop desktop = Desktop.getDesktop();
             try {
-				desktop.open(new File("regleJeu/index.html"));
+				desktop.open(new File("src/regleJeu/index.html"));
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
