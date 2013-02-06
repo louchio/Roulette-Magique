@@ -47,12 +47,12 @@ ________________________________________________________________________________
 		JPanel choix_nb_billes = new JPanel();
 		choix_nb_billes.setBackground(new Color(17, 53, 100));
 		choix_nb_billes.setLayout(new BoxLayout(choix_nb_billes, BoxLayout.X_AXIS));
-		JLabel choisir_label = new JLabel("Choir le nombre de billes : ");
+		JLabel choisir_label = new JLabel("Choisir le nombre de billes : ");
 		choisir_label.setFont(new Font("Arial", Font.PLAIN, 24));
 		choisir_label.setForeground(Color.WHITE);
 		choix_nb_billes.add(choisir_label);
 		
-		final JComboBox<Integer> nb_billes_selector = new JComboBox<Integer>(new Integer[] {1,2,3,4});
+		final JComboBox nb_billes_selector = new JComboBox(new Integer[] {1,2,3,4});
 		nb_billes_selector.addActionListener(new ActionListener() {
 			
 			@Override
@@ -75,7 +75,7 @@ ________________________________________________________________________________
 		c4.insets = new Insets(10, 10, 10, 10);
 		c4.gridwidth = 2;
 		
-		JButton bouton_commencer = new JButton("Personnaliser les billes");
+		JButton bouton_commencer = new JButton("Commencer la partie");
 		bouton_commencer.addActionListener(new ActionListener() {
 			
 			@Override
