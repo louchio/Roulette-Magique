@@ -3,9 +3,6 @@ package IHM;
 
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,9 +18,7 @@ public class Fenetre extends JFrame
 	
 	public static NouvellePartie p;
 	public static Partie c;
-	private ArrayList<String> liste_couleur ;
-	private ArrayList<String> liste_taille;
-	private ArrayList<String> liste_vitesse;
+
 	public Fenetre()
 	{
 		setTitle("La roulette magique");
@@ -35,6 +30,8 @@ public class Fenetre extends JFrame
 		
 		EcouteurNouvellePartie e1 = new EcouteurNouvellePartie(this);
 		EcouteurQuitter e2 = new EcouteurQuitter();
+		EcouterAPropos e3 = new EcouterAPropos();
+		EcouteurRegle e4 = new EcouteurRegle();
 		
 		JMenuBar mb = new JMenuBar();
 		JMenu m = new JMenu("Fichier");
@@ -48,15 +45,17 @@ public class Fenetre extends JFrame
 		mb.add(m);
 		
 		JMenu m2 = new JMenu("Aide");
-		JMenuItem regle = new JMenuItem("Règle du jeu");
+		JMenuItem regle = new JMenuItem("Regle du jeu");
+		regle.addActionListener(e4);
 		JMenuItem apropos = new JMenuItem("A propos");
+		apropos.addActionListener(e3);
 	
 		m2.add(regle);
 		m2.add(apropos);
 		mb.add(m2);
 		
 		setJMenuBar(mb);
-//
+
 		p = new NouvellePartie(this);
 		add(p);
 //		
