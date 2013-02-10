@@ -1,6 +1,7 @@
 package IHM;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -23,12 +24,14 @@ public class Fin_Partie extends JFrame {
 		setBounds(0, 0, 500, 300);	
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(false);
 		
 		JPanel p = new JPanel();
+		p.setBackground(new Color(17, 53, 100));
 		p.setLayout(new GridBagLayout());
-		JLabel texte = new JLabel("Partie Terminée, votre crédit est épuisé");
+		JLabel texte = new JLabel("Partie Terminee, votre credit est epuise");
+		texte.setForeground(Color.white);
 		p.add(texte, positionnement(0, 0, 2, 1));
 	
 		EcouteurQuitter e = new EcouteurQuitter();

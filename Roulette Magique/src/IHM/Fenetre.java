@@ -3,10 +3,15 @@ package IHM;
 
 
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 
 
 
@@ -18,15 +23,24 @@ public class Fenetre extends JFrame
 	
 	public static NouvellePartie p;
 	public static Partie c;
+	public Image image;
 
 	public Fenetre()
 	{
 		setTitle("La roulette magique");
-		setBounds(0, 0, 1000, 800);	
+		setBounds(0, 0, 1000, 700);	
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		setFocusable(true);
+		
+		try {
+			image = ImageIO.read(getClass().getResource("favicon.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setIconImage(image);
 		
 		EcouteurNouvellePartie e1 = new EcouteurNouvellePartie(this);
 		EcouteurQuitter e2 = new EcouteurQuitter();
@@ -57,7 +71,10 @@ public class Fenetre extends JFrame
 		setJMenuBar(mb);
 
 		p = new NouvellePartie(this);
-		add(p);
+		JScrollPane pane = new JScrollPane();
+		pane.setViewportView(p);
+		
+		add(pane);
 //		
 //		Roue_dynamique r = new Roue_dynamique();
 //		add(r);

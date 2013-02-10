@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 
 @SuppressWarnings("serial")
@@ -81,9 +82,11 @@ ________________________________________________________________________________
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				c = new Partie(nb_billes_select, f1);
+				JScrollPane pane = new JScrollPane();
+				pane.setViewportView(c);
 				f1.getContentPane().setVisible(false);
 				f1.getContentPane().removeAll();
-				f1.getContentPane().add(c);
+				f1.getContentPane().add(pane);
 				f1.getContentPane().setVisible(true);
 				
 			}

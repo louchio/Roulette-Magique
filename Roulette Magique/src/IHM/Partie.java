@@ -407,7 +407,7 @@ ________________________________________________________________________________
 		c.gridx = 7;
 		c.gridwidth = 1;
 		c.gridheight = 7;
-		c.insets = new Insets(10, 10, 10, 10);
+		c.insets = new Insets(5, 10, 5, 10);
 		c.fill = GridBagConstraints.BOTH;
 		
 		//Ajout liste au panel Tab
@@ -452,7 +452,7 @@ ________________________________________________________________________________
 		c.gridx = x;
 		c.gridwidth = largeur;
 		c.gridheight = hauteur;
-		c.insets = new Insets(10, 10, 10, 10);
+		c.insets = new Insets(5,10,5,10);
 		return c;
 	}
 	

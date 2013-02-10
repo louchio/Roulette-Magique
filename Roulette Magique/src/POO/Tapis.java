@@ -29,16 +29,7 @@ public class Tapis {
 		tab_sizain = new Integer [7];
 		tab_douzaine = new Integer [4];
 		tab_colonne = new Integer [4];
-		for(int i = 0; i<37; i++){
-			for(int j = 0 ; j<37; j++){
-				tab_cheval[i][j] = 0;
-				for(int k=0; k<37; k++){
-					for(int l=0; l<37; l++){
-						tab_carre[i][j][k][l]=0;
-					}
-				}
-			}
-		}
+		remettre_a_zero();
 		
 	}
 	

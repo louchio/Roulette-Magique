@@ -24,10 +24,17 @@ public class A_propos extends JFrame {
 		
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());
-		p.setBackground(new Color(161, 185, 243));
-		p.add(new JLabel("La Roulette Magique"), positionnement(0, 0, 1, 1));
-		p.add(new JLabel("Projet POO - Polytech 2013 - IRM4"), positionnement(1, 0, 1, 1));
-		p.add(new JLabel("Sébastien DEMECH - Ali NAJEM"), positionnement(2, 0, 1, 1));
+		p.setBackground(new Color(17, 53, 100));
+		
+		JLabel l1 = new JLabel("La Roulette Magique");
+		JLabel l2 = new JLabel("Projet POO - Polytech 2013 - IRM4");
+		JLabel l3 = new JLabel("Sébastien DEMECH - Ali NAJEM");
+		l1.setForeground(Color.WHITE);
+		l2.setForeground(Color.WHITE);
+		l3.setForeground(Color.WHITE);
+		p.add(l1, positionnement(0, 0, 1, 1));
+		p.add(l2, positionnement(1, 0, 1, 1));
+		p.add(l3, positionnement(2, 0, 1, 1));
 		
 		add(p, BorderLayout.CENTER);
 		setVisible(true);
