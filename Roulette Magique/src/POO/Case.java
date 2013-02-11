@@ -1,14 +1,13 @@
 package POO;
 
 public abstract class Case {
-  
-	
-	//Attributs
+
+	// Attributs
 	private int CoefMultiplicateur;
 	private int Mise;
-	
-	//Constructeurs
-	public Case(int coef){
+
+	// Constructeurs
+	public Case(int coef) {
 		setMise(0);
 		setCoefMultiplicateur(coef);
 	}

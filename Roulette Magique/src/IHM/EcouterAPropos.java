@@ -5,13 +5,10 @@ import java.awt.event.ActionListener;
 
 public class EcouterAPropos implements ActionListener {
 
-	
-
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		new A_propos();
-		
+
 	}
 
 }

@@ -2,22 +2,23 @@ package POO;
 
 public class Joueur {
 
-	//Attributs
+	// Attributs
 	private int compte;
-	
-	//Constructeur
-	public Joueur(){
+
+	// Constructeur
+	public Joueur() {
 		compte = 1000;
 	}
 
-	//Fonctions
-	public void Ajouter(int montant){
-		compte=compte+montant;
+	// Fonctions
+	public void Ajouter(int montant) {
+		compte = compte + montant;
 	}
-	
-	public void Retirer(int montant){
-		compte=compte-montant;
+
+	public void Retirer(int montant) {
+		compte = compte - montant;
 	}
+
 	public int getCompte() {
 		return compte;
 	}
