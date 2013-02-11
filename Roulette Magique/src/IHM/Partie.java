@@ -98,6 +98,8 @@ public class Partie extends JPanel implements Observer {
 	JLabel gain = new JLabel("0");
 	JButton tourner = new JButton("Tourner Roue");
 	JButton arreter_roue = new JButton("Arreter Roue");
+	JButton accelerer_roue = new JButton("Accelerer Roue");
+	JButton ralentir_roue = new JButton("Ralentir Roue");
 	
 	public Roue_dynamique roue_dyn = new Roue_dynamique();
 
@@ -406,15 +408,15 @@ public class Partie extends JPanel implements Observer {
 		roue_panel.add(tourner, positionnement(0, 0, 1, 1));
 
 		// Ajout Bouton Ralentir Roue
-		JButton ralentir_roue = new JButton("Ralentir Roue");
 		ralentir_roue.addActionListener(ralentir_roue());
 		roue_panel.add(ralentir_roue, positionnement(1, 0, 1, 1));
+		ralentir_roue.setEnabled(false);
 
 		// Ajout Bouton Accelerer
-		JButton accelerer_roue = new JButton("Accelerer Roue");
 		accelerer_roue.addActionListener(accelerer_roue());
 		roue_panel.add(accelerer_roue, positionnement(2, 0, 1, 1));
-
+		accelerer_roue.setEnabled(false);
+		
 		// Ajout Roue Panel au panel tab
 		tab.add(roue_panel, positionnement(6, 6, 1, 3));
 
@@ -984,6 +986,8 @@ public class Partie extends JPanel implements Observer {
 			public void actionPerformed(ActionEvent e) {
 				tourner.setEnabled(false);
 				arreter_roue.setEnabled(true);
+				accelerer_roue.setEnabled(true);
+				ralentir_roue.setEnabled(true);
 				partie.Tourner(roue_dyn);
 			}
 		};
@@ -1003,6 +1007,8 @@ public class Partie extends JPanel implements Observer {
 					listmodel.removeAllElements();
 					partie.RemettreZero();
 					arreter_roue.setEnabled(false);
+					accelerer_roue.setEnabled(false);
+					ralentir_roue.setEnabled(false);
 					if (partie.solde_compte() < nb_billes * 2) {
 						@SuppressWarnings("unused")
 						Fin_Partie fin = new Fin_Partie(f1);
