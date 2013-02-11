@@ -97,7 +97,8 @@ public class Partie extends JPanel implements Observer {
 	public JLabel num_tombe_bille4 = new JLabel("0");
 	JLabel gain = new JLabel("0");
 	JButton tourner = new JButton("Tourner Roue");
-
+	JButton arreter_roue = new JButton("Arreter Roue");
+	
 	public Roue_dynamique roue_dyn = new Roue_dynamique();
 
 	private int acces2;
@@ -371,9 +372,11 @@ public class Partie extends JPanel implements Observer {
 		billes_panel.add(num_tombe_bille4, positionnement(1, 3, 1, 1));
 
 		// Bouton Arreter Roue
-		JButton arreter_roue = new JButton("Arreter Roue");
+		
 		arreter_roue.addActionListener(areter_roue());
 		billes_panel.add(arreter_roue, positionnement(2, 0, 4, 1));
+		arreter_roue.setEnabled(false);
+		
 
 		// Ajout Bille panel au panel tab
 		tab.add(billes_panel, positionnement(6, 0, 4, 3));
@@ -980,6 +983,7 @@ public class Partie extends JPanel implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tourner.setEnabled(false);
+				arreter_roue.setEnabled(true);
 				partie.Tourner(roue_dyn);
 			}
 		};
@@ -998,6 +1002,7 @@ public class Partie extends JPanel implements Observer {
 					solde.setText(Integer.toString(partie.solde_compte()));
 					listmodel.removeAllElements();
 					partie.RemettreZero();
+					arreter_roue.setEnabled(false);
 					if (partie.solde_compte() < nb_billes * 2) {
 						@SuppressWarnings("unused")
 						Fin_Partie fin = new Fin_Partie(f1);
