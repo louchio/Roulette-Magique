@@ -296,19 +296,19 @@ public class Partie extends JPanel implements Observer {
 		mise_panel.add(mise, positionnement(0, 5, 1, 1));
 		mise_panel.add(plus, positionnement(0, 6, 1, 1));
 
+		// Ajout Bouton Miser
+		JButton miser = new JButton("Miser");
+		miser.addActionListener(miser_listener());
+		mise_panel.add(miser, positionnement(0, 8, 4, 1));
+		
 		// Ajout panel mise au panel tab
 		tab.add(mise_panel, positionnement(4, 0, 7, 1));
 
 		/*
 		 * ____________________________________________________________________________________________
-		 * Cinquième ligne bouton Miser et gain
+		 * Cinquième ligne Afficher Gain
 		 * _____________________________________________________________________________________________
 		 */
-
-		// Ajout Bouton Miser
-		JButton miser = new JButton("Miser");
-		miser.addActionListener(miser_listener());
-		tab.add(miser, positionnement(5, 0, 4, 1));
 
 		// Ajout Gain
 		JPanel gain_panel = new JPanel();
@@ -322,7 +322,7 @@ public class Partie extends JPanel implements Observer {
 		gain.setFont(new Font("Arial", Font.BOLD, 24));
 		gain_panel.add(gain_label, positionnement(0, 0, 1, 1));
 		gain_panel.add(gain, positionnement(0, 1, 1, 1));
-		tab.add(gain_panel, positionnement(5, 4, 3, 1));
+		tab.add(gain_panel, positionnement(5, 4, 2, 1));
 
 		/*
 		 * ____________________________________________________________________________________________
