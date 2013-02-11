@@ -922,49 +922,53 @@ public class Partie extends JPanel implements Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int i = list.getSelectedIndex();
-				if (liste_mise.get(i) == "pair")
-					partie.MiserPair(liste_bille.get(i), 0);
-				if (liste_mise.get(i) == "impair")
-					partie.MiserImpair(liste_bille.get(i), 0);
-				if (liste_mise.get(i) == "passe")
-					partie.MiserPasse(liste_bille.get(i), 0);
-				if (liste_mise.get(i) == "manque")
-					partie.MiserManque(liste_bille.get(i), 0);
-				if (liste_mise.get(i) == "numero")
-					partie.MiserNumero(liste_bille.get(i), 0, liste_num1.get(i));
-				if (liste_mise.get(i) == "transversale")
-					partie.MiserTransversale(liste_bille.get(i), 0,
-							liste_num1.get(i));
-				if (liste_mise.get(i) == "cheval")
-					partie.MiserCheval(liste_bille.get(i), 0,
-							liste_num1.get(i), liste_num2.get(i));
-				if (liste_mise.get(i) == "transversale")
-					partie.MiserTransversale(liste_bille.get(i), 0,
-							liste_num1.get(i));
-				if (liste_mise.get(i) == "carre")
-					partie.MiserCarre(liste_bille.get(i), 0, liste_num1.get(i),
-							liste_num2.get(i), liste_num3.get(i),
-							liste_num4.get(i));
-				if (liste_mise.get(i) == "sizain")
-					partie.MiserSizain(liste_bille.get(i), 0, liste_num1.get(i));
-				if (liste_mise.get(i) == "douzaine")
-					partie.MiserDouzaine(liste_bille.get(i), 0,
-							liste_num1.get(i));
-				if (liste_mise.get(i) == "colonne")
-					partie.MiserColonne(liste_bille.get(i), 0,
-							liste_num1.get(i));
+				if(list.getSelectedIndex() != -1)
+				{
+					int i = list.getSelectedIndex();
+					if (liste_mise.get(i) == "pair")
+						partie.MiserPair(liste_bille.get(i), 0);
+					if (liste_mise.get(i) == "impair")
+						partie.MiserImpair(liste_bille.get(i), 0);
+					if (liste_mise.get(i) == "passe")
+						partie.MiserPasse(liste_bille.get(i), 0);
+					if (liste_mise.get(i) == "manque")
+						partie.MiserManque(liste_bille.get(i), 0);
+					if (liste_mise.get(i) == "numero")
+						partie.MiserNumero(liste_bille.get(i), 0, liste_num1.get(i));
+					if (liste_mise.get(i) == "transversale")
+						partie.MiserTransversale(liste_bille.get(i), 0,
+								liste_num1.get(i));
+					if (liste_mise.get(i) == "cheval")
+						partie.MiserCheval(liste_bille.get(i), 0,
+								liste_num1.get(i), liste_num2.get(i));
+					if (liste_mise.get(i) == "transversale")
+						partie.MiserTransversale(liste_bille.get(i), 0,
+								liste_num1.get(i));
+					if (liste_mise.get(i) == "carre")
+						partie.MiserCarre(liste_bille.get(i), 0, liste_num1.get(i),
+								liste_num2.get(i), liste_num3.get(i),
+								liste_num4.get(i));
+					if (liste_mise.get(i) == "sizain")
+						partie.MiserSizain(liste_bille.get(i), 0, liste_num1.get(i));
+					if (liste_mise.get(i) == "douzaine")
+						partie.MiserDouzaine(liste_bille.get(i), 0,
+								liste_num1.get(i));
+					if (liste_mise.get(i) == "colonne")
+						partie.MiserColonne(liste_bille.get(i), 0,
+								liste_num1.get(i));
 
-				partie.ajouter(liste_somme.get(i));
-				solde.setText(Integer.toString(partie.solde_compte()));
-				liste_somme.remove(i);
-				listmodel.remove(i);
-				liste_mise.remove(i);
-				liste_bille.remove(i);
-				liste_num1.remove(i);
-				liste_num2.remove(i);
-				liste_num3.remove(i);
-				liste_num4.remove(i);
+					partie.ajouter(liste_somme.get(i));
+					solde.setText(Integer.toString(partie.solde_compte()));
+					liste_somme.remove(i);
+					listmodel.remove(i);
+					liste_mise.remove(i);
+					liste_bille.remove(i);
+					liste_num1.remove(i);
+					liste_num2.remove(i);
+					liste_num3.remove(i);
+					liste_num4.remove(i);
+				
+				}
 			}
 		};
 		return s;
