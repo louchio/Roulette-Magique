@@ -95,20 +95,24 @@ public class Partie extends JPanel implements Observer {
 	public JLabel num_tombe_bille2 = new JLabel("0");
 	public JLabel num_tombe_bille3 = new JLabel("0");
 	public JLabel num_tombe_bille4 = new JLabel("0");
-	JLabel gain = new JLabel("0");
-	JButton tourner = new JButton("Tourner Roue");
-	JButton arreter_roue = new JButton("Arreter Roue");
-	JButton accelerer_roue = new JButton("Accelerer Roue");
-	JButton ralentir_roue = new JButton("Ralentir Roue");
+	private JLabel gain = new JLabel("0");
+	private JButton tourner = new JButton("Tourner Roue");
+	private JButton arreter_roue = new JButton("Arreter Roue");
+	private JButton accelerer_roue = new JButton("Accelerer Roue");
+	private JButton ralentir_roue = new JButton("Ralentir Roue");
 	
 	public Roue_dynamique roue_dyn = new Roue_dynamique();
 
 	private int acces2;
 	private int acces3;
+	
 
-	Thread t1;
 
-	// Constructeurs
+	/**
+	 * Constructeur du Panel Partie permettant de jouer
+	 * @param nb_billes
+	 * @param f1
+	 */
 	public Partie(int nb_billes, Fenetre f1) {
 
 		/*
@@ -494,10 +498,14 @@ public class Partie extends JPanel implements Observer {
 		add(tab, BorderLayout.CENTER);
 	}
 
-	/*
-	 * ____________________________________________________________________________________________
-	 * Fonctions
-	 * _____________________________________________________________________________________________
+
+	/**
+	 * Fonction permettant de renseigner sur le positionnement des GRidbagConstraint
+	 * @param y
+	 * @param x
+	 * @param largeur
+	 * @param hauteur
+	 * @return GridBagConstraints
 	 */
 	public GridBagConstraints positionnement(int y, int x, int largeur,
 			int hauteur) {
@@ -510,6 +518,11 @@ public class Partie extends JPanel implements Observer {
 		return c;
 	}
 
+	/**
+	 * Affiche le bon card layout
+	 * @param s1
+	 * @return ActionListener
+	 */
 	public ActionListener cardlayout(final String s1) {
 		ActionListener s = new ActionListener() {
 
@@ -524,6 +537,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Désactive les selecteur des numéros secondaire pour le cheval et le carré
+	 * @return ActionListener
+	 */
 	public ActionListener cardlayout_simple() {
 		ActionListener s = new ActionListener() {
 
@@ -539,6 +556,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Listener pour afficher les numéros a cote du numéro sélectionner dan le selecteur cheval
+	 * @return ActionListener
+	 */
 	public ActionListener cheval_listener() {
 		ActionListener s = new ActionListener() {
 
@@ -558,6 +579,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Affiche les numéro correspondant au numéro selectionner dans le premier selecteur du carré
+	 * @return ActionListener
+	 */
 	public ActionListener carre1_listener() {
 		ActionListener s = new ActionListener() {
 
@@ -590,6 +615,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Affiche les numéro correspondant au numéro selectionner dans les deux premiers selecteur du carré
+	 * @return ActionListener
+	 */
 	public ActionListener carre2_listener() {
 		ActionListener s = new ActionListener() {
 
@@ -622,6 +651,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Affiche les numéro correspondant au numéro selectionner dans les trois premiers selecteur du carré
+	 * @return ActionListener
+	 */
 	public ActionListener carre3_listener() {
 		ActionListener s = new ActionListener() {
 
@@ -656,6 +689,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Augmente la mise lorsque l'utilisateur appuie sur le bouton plus
+	 * @return ActionListener
+	 */
 	public ActionListener plus_listener() {
 		ActionListener s = new ActionListener() {
 
@@ -671,6 +708,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Diminue la mise lorsque l'utilisateur appuie sur le bouton moins
+	 * @return ActionListener
+	 */
 	public ActionListener moins_listener() {
 		ActionListener s = new ActionListener() {
 
@@ -687,6 +728,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Mise les paris sélectionner et affiche le résultat dans la liste
+	 * @return ActionListener
+	 */
 	public ActionListener miser_listener() {
 		ActionListener s = new ActionListener() {
 
@@ -922,6 +967,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Supprimer un paris déjà effectué
+	 * @return ActionListener
+	 */
 	public ActionListener supprimer_listener() {
 		ActionListener s = new ActionListener() {
 
@@ -979,6 +1028,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Faire tourner la roue 
+	 * @return ActionListener
+	 */
 	public ActionListener tourner_listener() {
 		ActionListener s = new ActionListener() {
 
@@ -994,6 +1047,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Arrete la roue et calcule les gains en fonction des numéros qui sont tombé
+	 * @return ActionListener
+	 */
 	public ActionListener areter_roue() {
 		ActionListener s = new ActionListener() {
 
@@ -1002,7 +1059,7 @@ public class Partie extends JPanel implements Observer {
 				if (!tourner.isEnabled()) {
 					partie.arret = false;
 					gain.setText(Integer.toString(partie
-							.CalculerGain(Partie.this)));
+							.CalculerGain()));
 					solde.setText(Integer.toString(partie.solde_compte()));
 					listmodel.removeAllElements();
 					partie.RemettreZero();
@@ -1029,6 +1086,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Ralentie la vitesse de la roue
+	 * @return ActionListener
+	 */
 	public ActionListener ralentir_roue() {
 		ActionListener s = new ActionListener() {
 
@@ -1041,6 +1102,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Accelere la roue
+	 * @return ActionListener
+	 */
 	public ActionListener accelerer_roue() {
 		ActionListener s = new ActionListener() {
 
@@ -1055,6 +1120,10 @@ public class Partie extends JPanel implements Observer {
 		return s;
 	}
 
+	/**
+	 * Désactive ou active les selecteur en fonction du paramètre
+	 * @param b:boolean
+	 */
 	public void selectorIsEnable(boolean b) {
 		numero_selector.setEnabled(b);
 		numero_cheval_selector_1.setEnabled(b);
@@ -1065,6 +1134,9 @@ public class Partie extends JPanel implements Observer {
 		colonne_selector.setEnabled(b);
 	}
 
+	/**
+	 * Remplie le tapis (utile pour trouver les numéros côtes a côtes
+	 */
 	public void RemplirTapis() {
 		tapis[0][0] = 0;
 		tapis[1][0] = 0;
@@ -1077,7 +1149,13 @@ public class Partie extends JPanel implements Observer {
 			}
 		}
 	}
-
+	
+	/**
+	 * Test si deux numéros sont à côté dans le cas d'un cheval
+	 * @param x1
+	 * @param x2
+	 * @return boolean
+	 */
 	public boolean TestCheval(int x1, int x2) {
 		for (int y = 0; y < 13; y++) {
 			for (int x = 0; x < 3; x++) {
@@ -1137,6 +1215,12 @@ public class Partie extends JPanel implements Observer {
 
 	}
 
+	/**
+	 * Test si deux numéros sont à côté dans le cas d'un carré (diagonale)
+	 * @param x1
+	 * @param x2
+	 * @return boolean
+	 */
 	public boolean TestCarre(int x1, int x2) {
 		for (int y = 0; y < 13; y++) {
 			for (int x = 0; x < 3; x++) {
@@ -1212,18 +1296,10 @@ public class Partie extends JPanel implements Observer {
 
 	}
 
-	public boolean Exist(int x, JComboBox e) {
-		for (int i = 0; i < e.getItemCount(); i++) {
-			if (e.getItemAt(i).equals(x)) {
-				return true;
-			}
-		}
-
-		return false;
-
-	}
-
-	@Override
+	
+	/**
+	 * Met à jour les numéros des billes dés que le signal est envoyer (notifyupdate)s
+	 */
 	public void update(Observable arg0, Object arg1) {
 		for (int j = 0; j < partie.num_tombe.size(); j++) {
 

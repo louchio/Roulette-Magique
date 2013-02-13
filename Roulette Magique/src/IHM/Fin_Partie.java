@@ -18,6 +18,10 @@ public class Fin_Partie extends JFrame {
 
 	private Fin_Partie fin1;
 
+/**
+ * Constructeur de la fenêtre de fin de partie
+ * @param f
+ */
 	public Fin_Partie(final Fenetre f) {
 		fin1 = this;
 		setTitle("Fin de Partie");
@@ -61,6 +65,14 @@ public class Fin_Partie extends JFrame {
 		setVisible(true);
 	}
 
+	/**
+	 * Fonction permettant de renseigner sur le positionnement des GRidbagConstraint
+	 * @param y
+	 * @param x
+	 * @param largeur
+	 * @param hauteur
+	 * @return GridBagConstraints
+	 */
 	public GridBagConstraints positionnement(int y, int x, int largeur,
 			int hauteur) {
 		GridBagConstraints c = new GridBagConstraints();

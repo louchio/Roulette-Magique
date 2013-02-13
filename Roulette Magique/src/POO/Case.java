@@ -6,7 +6,12 @@ public abstract class Case {
 	private int CoefMultiplicateur;
 	private int Mise;
 
-	// Constructeurs
+	/**
+	 * Constructeur de la classe Case, affecte le coefficient multiplicateur de
+	 * la case et initialise sa mide de départ à zéro
+	 * 
+	 * @param coef
+	 */
 	public Case(int coef) {
 		setMise(0);
 		setCoefMultiplicateur(coef);

@@ -16,6 +16,7 @@ public class Roue_dynamique extends JPanel {
 	public BufferedImage image = null;
 	private double angle = 0.0;
 
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (image != null) {
@@ -23,6 +24,9 @@ public class Roue_dynamique extends JPanel {
 		}
 	}
 
+	/**
+	 * Constructeur de la roue dynamique
+	 */
 	public Roue_dynamique() {
 		try {
 			image = ImageIO.read(getClass().getResource("roulette.png"));
@@ -34,6 +38,9 @@ public class Roue_dynamique extends JPanel {
 
 	}
 
+	/**
+	 * Rotation de l'image
+	 */
 	public void rotation() {
 		AffineTransform transformer = new AffineTransform();
 		transformer.rotate(angle, this.getWidth() / 2, this.getHeight() / 2);

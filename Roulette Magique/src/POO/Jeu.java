@@ -3,7 +3,6 @@ package POO;
 import java.util.ArrayList;
 import java.util.Observable;
 
-import IHM.Partie;
 import IHM.Roue_dynamique;
 
 public class Jeu extends Observable {
@@ -17,7 +16,12 @@ public class Jeu extends Observable {
 	public int vitesse = 150;
 	public boolean arret = true;
 
-	// Constructeur
+	/**
+	 * Constructeur de la classe Jeu, crée le tapis, le joueur et la roue
+	 * attaché a la partie
+	 * 
+	 * @param nb_billes
+	 */
 	public Jeu(int nb_billes) {
 		this.nb_billes = nb_billes;
 		tapis = new Tapis[nb_billes];
@@ -28,24 +32,30 @@ public class Jeu extends Observable {
 		r1 = new Roue(nb_billes);
 	}
 
-	// Fonctions
-	public String AfficherTapis() {
-		String affiche = "";
-		for (int i = 0; i < nb_billes; i++) {
-			affiche = affiche + "Tapis " + i + " : " + tapis[i].toString()
-					+ "\n";
-		}
-		return affiche;
-	}
-
+	/**
+	 * Renvoie le montant du compte du joueur
+	 * @return solde du compte joueur
+	 */
 	public int solde_compte() {
 		return j1.getCompte();
 	}
 
+	/**
+	 * 
+	 * @param somme
+	 *            a ajouté au compte du joueur
+	 */
 	public void ajouter(int n) {
 		j1.Ajouter(n);
 	}
 
+	/**
+	 * Miser une somme sur un numéro d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 * @param num
+	 */
 	public void MiserNumero(int num_tapis, int somme, int num) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -58,6 +68,12 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur Impair d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 */
 	public void MiserImpair(int num_tapis, int somme) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -70,6 +86,12 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur Pair d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 */
 	public void MiserPair(int num_tapis, int somme) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -82,6 +104,12 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur Manque(1-18) d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 */
 	public void MiserManque(int num_tapis, int somme) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -94,6 +122,12 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur Passe(19-36) d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 */
 	public void MiserPasse(int num_tapis, int somme) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -106,6 +140,14 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur deux numéro d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 * @param num1
+	 * @param num2
+	 */
 	public void MiserCheval(int num_tapis, int somme, int num1, int num2) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -118,6 +160,13 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur une ligne d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 * @param ligne
+	 */
 	public void MiserTransversale(int num_tapis, int somme, int ligne) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -130,6 +179,16 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur quatre numéros côte à côte d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 * @param num1
+	 * @param num2
+	 * @param num3
+	 * @param num4
+	 */
 	public void MiserCarre(int num_tapis, int somme, int num1, int num2,
 			int num3, int num4) {
 		if (num_tapis == 0) {
@@ -143,6 +202,13 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur deux lignes côte à côte d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 * @param ligne
+	 */
 	public void MiserSizain(int num_tapis, int somme, int ligne) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -155,6 +221,13 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur quatre lignes côte à côte d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 * @param ligne
+	 */
 	public void MiserDouzaine(int num_tapis, int somme, int ligne) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -167,6 +240,13 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Miser une somme sur une colonne d'un tapis spécifique
+	 * 
+	 * @param num_tapis
+	 * @param somme
+	 * @param colonne
+	 */
 	public void MiserColonne(int num_tapis, int somme, int colonne) {
 		if (num_tapis == 0) {
 			for (int i = 0; i < nb_billes; i++) {
@@ -179,6 +259,13 @@ public class Jeu extends Observable {
 		}
 	}
 
+	/**
+	 * Permet de faire tourner la roue en affichant les numéros traverser et les
+	 * modification graphique de l'image râce à un thread et le design pattern
+	 * MVC
+	 * 
+	 * @param roue_dyn
+	 */
 	public void Tourner(final Roue_dynamique roue_dyn) {
 		new Thread() {
 			public void run() {
@@ -195,13 +282,19 @@ public class Jeu extends Observable {
 							}
 						}
 					}
-					roue_dyn.setAngle(roue_dyn.getAngle() + 0.1);
-					roue_dyn.rotation();
-					setChanged();
-					notifyObservers();
+					roue_dyn.setAngle(roue_dyn.getAngle() + 0.1); // Modifie
+																	// l'angle
+																	// de
+																	// rotation
+																	// de
+																	// l'image
+					roue_dyn.rotation(); // Effectue la rotation de l'image
+					setChanged(); // Notifie que l'état a changer
+					notifyObservers(); // Avertie l'Observer de la modification
 
 					try {
-						Thread.sleep(vitesse);
+						Thread.sleep(vitesse); // Permet d'accélérer ou ralentir
+												// la roue
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -215,10 +308,16 @@ public class Jeu extends Observable {
 		}.start();
 	}
 
-	public int CalculerGain(Partie p) {
+	/**
+	 * Calcule les gains d'une partie en fonction des paris et des numéros
+	 * tombés
+	 * 
+	 * @param p
+	 * @return int
+	 */
+	public int CalculerGain() {
 		int gain = 0;
 		for (int j = 0; j < num_tombe.size(); j++) {
-			System.out.println(num_tombe.get(j));
 			gain = gain + tapis[j].CalculerGainCase(num_tombe.get(j));
 			gain = gain + tapis[j].CalculerGainCheval(num_tombe.get(j));
 			gain = gain + tapis[j].CalculerGainTransversale(num_tombe.get(j));
@@ -231,6 +330,9 @@ public class Jeu extends Observable {
 		return gain;
 	}
 
+	/**
+	 * Remet à zéro tout les tapis du jeu
+	 */
 	public void RemettreZero() {
 		for (int i = 0; i < nb_billes; i++) {
 			tapis[i].remettre_a_zero();

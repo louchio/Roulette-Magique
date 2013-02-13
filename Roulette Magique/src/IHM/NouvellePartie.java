@@ -24,6 +24,10 @@ public class NouvellePartie extends JPanel {
 	private Partie c;
 	private JPanel tab = new JPanel();
 
+	/**
+	 * Constructeur du Panel de nouvelle partie
+	 * @param f1
+	 */
 	public NouvellePartie(final Fenetre f1) {
 
 		setLayout(new BorderLayout());
@@ -100,10 +104,13 @@ public class NouvellePartie extends JPanel {
 
 	}
 
-	/*
-	 * ____________________________________________________________________________________________
-	 * Fonction de positionnement
-	 * _____________________________________________________________________________________________
+	/**
+	 * Fonction permettant de renseigner sur le positionnement des GRidbagConstraint
+	 * @param y
+	 * @param x
+	 * @param largeur
+	 * @param hauteur
+	 * @return GridBagConstraints
 	 */
 	public GridBagConstraints positionnement(int y, int x, int largeur,
 			int hauteur) {

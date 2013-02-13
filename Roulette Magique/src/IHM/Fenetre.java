@@ -18,6 +18,9 @@ public class Fenetre extends JFrame {
 	public static Partie c;
 	public Image image;
 
+	/**
+	 * Constructeur de la fenetre principale
+	 */
 	public Fenetre() {
 		setTitle("La roulette magique");
 		setBounds(0, 0, 1000, 700);

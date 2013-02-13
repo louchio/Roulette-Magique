@@ -5,16 +5,28 @@ public class Joueur {
 	// Attributs
 	private int compte;
 
-	// Constructeur
+	/**
+	 * Constructeur de la classe Joueur, affecte le crédit initial du compte
+	 * joueur (1000)
+	 */
 	public Joueur() {
 		compte = 1000;
 	}
 
-	// Fonctions
+	/**
+	 * Ajoute un montant au compte joueur
+	 * 
+	 * @param montant
+	 */
 	public void Ajouter(int montant) {
 		compte = compte + montant;
 	}
 
+	/**
+	 * Retire un montant au compte joueur
+	 * 
+	 * @param montant
+	 */
 	public void Retirer(int montant) {
 		compte = compte - montant;
 	}

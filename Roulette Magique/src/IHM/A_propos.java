@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class A_propos extends JFrame {
 
+	/**
+	 * Constructeur fenetre A propos
+	 */
 	public A_propos() {
 
 		setTitle("A propos");
@@ -41,6 +44,14 @@ public class A_propos extends JFrame {
 
 	}
 
+	/**
+	 * Fonction permettant de renseigner sur le positionnement des GRidbagConstraint
+	 * @param y
+	 * @param x
+	 * @param largeur
+	 * @param hauteur
+	 * @return GridBagConstraints
+	 */
 	public GridBagConstraints positionnement(int y, int x, int largeur,
 			int hauteur) {
 		GridBagConstraints c = new GridBagConstraints();

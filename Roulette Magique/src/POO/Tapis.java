@@ -4,15 +4,24 @@ public class Tapis {
 
 	// Attributs
 	private int nb_case = 41;
-	private Case[] tab;
-	private Integer[][] tab_cheval;
-	private Integer[] tab_transversale;
-	private Integer[][][][] tab_carre;
-	private Integer[] tab_sizain;
-	private Integer[] tab_douzaine;
-	private Integer[] tab_colonne;
+	private Case[] tab; // tableau contenant les mises par case (Numéro, chance
+						// simple)
+	private Integer[][] tab_cheval; // tableau contenant les mises sur les
+									// numéros à cheval
+	private Integer[] tab_transversale; // tableau contenant les mises des
+										// transversales
+	private Integer[][][][] tab_carre; // tableau contenant les mises sur les
+										// carré
+	private Integer[] tab_sizain; // tableau contenant les mises sur les sizains
+	private Integer[] tab_douzaine; // tableau contenant les mises sur les
+									// douzaines
+	private Integer[] tab_colonne; // tableau contenant les mises sur les
+									// colonnes
 
-	// Constructeur
+	/**
+	 * Constructeur de la classe Tapis, Crée les cases du tapis (numéros et
+	 * chances simples), initialise le tableau des mises.
+	 */
 	public Tapis() {
 		tab = new Case[nb_case];
 		for (int i = 0; i < 37; i++) {
@@ -32,44 +41,88 @@ public class Tapis {
 
 	}
 
-	// Fonctions
-	public String toString() {
-		String affiche = "";
-		for (int i = 0; i < nb_case; i++) {
-			affiche = affiche + tab[i].toString() + " ; ";
-		}
-		return affiche;
-	}
-
+	/**
+	 * Affecter le montant de la mise a une case
+	 * 
+	 * @param somme
+	 * @param num
+	 */
 	public void MiserCase(int somme, int num) {
 		tab[num].setMise(tab[num].getMise() + somme);
 	}
 
+	/**
+	 * Affecter le montant de la mise sur deux numéros à cheval
+	 * 
+	 * @param somme
+	 * @param num1
+	 * @param num2
+	 */
 	public void MiserCheval(int somme, int num1, int num2) {
 		tab_cheval[num1][num2] = tab_cheval[num1][num2] + somme;
 	}
 
+	/**
+	 * Affecter le montant de la mise a une transversale
+	 * 
+	 * @param somme
+	 * @param ligne
+	 */
 	public void MiserTransversale(int somme, int ligne) {
 		tab_transversale[ligne] = tab_transversale[ligne] + somme;
 	}
 
+	/**
+	 * Affecter le montant de la mise a un carré
+	 * 
+	 * @param somme
+	 * @param num1
+	 * @param num2
+	 * @param num3
+	 * @param num4
+	 */
 	public void MiserCarre(int somme, int num1, int num2, int num3, int num4) {
 		tab_carre[num1][num2][num3][num4] = tab_carre[num1][num2][num3][num4]
 				+ somme;
 	}
 
+	/**
+	 * Affecter le montant de la mise a un siazin
+	 * 
+	 * @param somme
+	 * @param ligne
+	 */
 	public void MiserSizain(int somme, int ligne) {
 		tab_sizain[ligne] = tab_sizain[ligne] + somme;
 	}
 
+	/**
+	 * Affecter le montant de la mise a une douzaine
+	 * 
+	 * @param somme
+	 * @param ligne
+	 */
 	public void MiserDouzaine(int somme, int ligne) {
 		tab_douzaine[ligne] = tab_douzaine[ligne] + somme;
 	}
 
+	/**
+	 * Affecter le montant de la mise a une colonne
+	 * 
+	 * @param somme
+	 * @param colonne
+	 */
 	public void MiserColonne(int somme, int colonne) {
 		tab_colonne[colonne] = tab_colonne[colonne] + somme;
 	}
 
+	/**
+	 * Calcul les gains a partir d'un numéro et pour les mises effectuer sur les
+	 * cases (Numéros, chances simples)
+	 * 
+	 * @param num_tombe
+	 * @return gain
+	 */
 	public int CalculerGainCase(int num_tombe) {
 		int gain = 0;
 
@@ -120,6 +173,13 @@ public class Tapis {
 		return gain;
 	}
 
+	/**
+	 * Calcul les gains a partir d'un numéro et pour les mises effectuer sur les
+	 * numéros à cheval
+	 * 
+	 * @param num_tombe
+	 * @return gain
+	 */
 	public int CalculerGainCheval(int num_tombe) {
 		int gain = 0;
 
@@ -134,6 +194,13 @@ public class Tapis {
 		return gain;
 	}
 
+	/**
+	 * Calcul les gains a partir d'un numéro et pour les mises effectuer sur les
+	 * transversales
+	 * 
+	 * @param num_tombe
+	 * @return gain
+	 */
 	public int CalculerGainTransversale(int num_tombe) {
 		int gain = 0;
 
@@ -240,6 +307,13 @@ public class Tapis {
 		return gain;
 	}
 
+	/**
+	 * Calcul les gains a partir d'un numéro et pour les mises effectuer sur les
+	 * carrés
+	 * 
+	 * @param num_tombe
+	 * @return gain
+	 */
 	public int CalculerGainCarre(int num_tombe) {
 		int gain = 0;
 		for (int i = 0; i < 37; i++) {
@@ -258,6 +332,13 @@ public class Tapis {
 		return gain;
 	}
 
+	/**
+	 * Calcul les gains a partir d'un numéro et pour les mises effectuer sur les
+	 * sizains
+	 * 
+	 * @param num_tombe
+	 * @return gain
+	 */
 	public int CalculerGainSizain(int num_tombe) {
 		int gain = 0;
 
@@ -328,6 +409,13 @@ public class Tapis {
 		return gain;
 	}
 
+	/**
+	 * Calcul les gains a partir d'un numéro et pour les mises effectuer sur les
+	 * douzaines
+	 * 
+	 * @param num_tombe
+	 * @return gain
+	 */
 	public int CalculerGainDouzaine(int num_tombe) {
 		int gain = 0;
 
@@ -386,6 +474,13 @@ public class Tapis {
 		return gain;
 	}
 
+	/**
+	 * Calcul les gains a partir d'un numéro et pour les mises effectuer sur les
+	 * colonnes
+	 * 
+	 * @param num_tombe
+	 * @return gain
+	 */
 	public int CalculerGainColonne(int num_tombe) {
 		int gain = 0;
 
@@ -444,6 +539,9 @@ public class Tapis {
 		return gain;
 	}
 
+	/**
+	 * Remet à zéro tout les tableau de mise
+	 */
 	public void remettre_a_zero() {
 		for (int i = 0; i < 41; i++) {
 			tab[i].setMise(0);
