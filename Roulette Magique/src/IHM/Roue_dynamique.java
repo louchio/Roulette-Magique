@@ -16,7 +16,6 @@ public class Roue_dynamique extends JPanel {
 	public BufferedImage image = null;
 	private double angle = 0.0;
 
-	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (image != null) {

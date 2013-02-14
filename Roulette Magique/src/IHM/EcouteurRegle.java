@@ -17,8 +17,7 @@ public class EcouteurRegle implements ActionListener {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		
-	
+
 	}
 
 }

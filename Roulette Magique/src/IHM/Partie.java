@@ -100,16 +100,15 @@ public class Partie extends JPanel implements Observer {
 	private JButton arreter_roue = new JButton("Arreter Roue");
 	private JButton accelerer_roue = new JButton("Accelerer Roue");
 	private JButton ralentir_roue = new JButton("Ralentir Roue");
-	
+
 	public Roue_dynamique roue_dyn = new Roue_dynamique();
 
 	private int acces2;
 	private int acces3;
-	
-
 
 	/**
 	 * Constructeur du Panel Partie permettant de jouer
+	 * 
 	 * @param nb_billes
 	 * @param f1
 	 */
@@ -307,7 +306,7 @@ public class Partie extends JPanel implements Observer {
 		JButton miser = new JButton("Miser");
 		miser.addActionListener(miser_listener());
 		mise_panel.add(miser, positionnement(0, 8, 4, 1));
-		
+
 		// Ajout panel mise au panel tab
 		tab.add(mise_panel, positionnement(4, 0, 7, 1));
 
@@ -378,11 +377,10 @@ public class Partie extends JPanel implements Observer {
 		billes_panel.add(num_tombe_bille4, positionnement(1, 3, 1, 1));
 
 		// Bouton Arreter Roue
-		
+
 		arreter_roue.addActionListener(areter_roue());
 		billes_panel.add(arreter_roue, positionnement(2, 0, 4, 1));
 		arreter_roue.setEnabled(false);
-		
 
 		// Ajout Bille panel au panel tab
 		tab.add(billes_panel, positionnement(6, 0, 4, 3));
@@ -420,7 +418,7 @@ public class Partie extends JPanel implements Observer {
 		accelerer_roue.addActionListener(accelerer_roue());
 		roue_panel.add(accelerer_roue, positionnement(2, 0, 1, 1));
 		accelerer_roue.setEnabled(false);
-		
+
 		// Ajout Roue Panel au panel tab
 		tab.add(roue_panel, positionnement(6, 6, 1, 3));
 
@@ -498,9 +496,10 @@ public class Partie extends JPanel implements Observer {
 		add(tab, BorderLayout.CENTER);
 	}
 
-
 	/**
-	 * Fonction permettant de renseigner sur le positionnement des GRidbagConstraint
+	 * Fonction permettant de renseigner sur le positionnement des
+	 * GRidbagConstraint
+	 * 
 	 * @param y
 	 * @param x
 	 * @param largeur
@@ -520,6 +519,7 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Affiche le bon card layout
+	 * 
 	 * @param s1
 	 * @return ActionListener
 	 */
@@ -539,6 +539,7 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Désactive les selecteur des numéros secondaire pour le cheval et le carré
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener cardlayout_simple() {
@@ -557,7 +558,9 @@ public class Partie extends JPanel implements Observer {
 	}
 
 	/**
-	 * Listener pour afficher les numéros a cote du numéro sélectionner dan le selecteur cheval
+	 * Listener pour afficher les numéros a cote du numéro sélectionner dan le
+	 * selecteur cheval
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener cheval_listener() {
@@ -580,7 +583,9 @@ public class Partie extends JPanel implements Observer {
 	}
 
 	/**
-	 * Affiche les numéro correspondant au numéro selectionner dans le premier selecteur du carré
+	 * Affiche les numéro correspondant au numéro selectionner dans le premier
+	 * selecteur du carré
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener carre1_listener() {
@@ -616,7 +621,9 @@ public class Partie extends JPanel implements Observer {
 	}
 
 	/**
-	 * Affiche les numéro correspondant au numéro selectionner dans les deux premiers selecteur du carré
+	 * Affiche les numéro correspondant au numéro selectionner dans les deux
+	 * premiers selecteur du carré
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener carre2_listener() {
@@ -652,7 +659,9 @@ public class Partie extends JPanel implements Observer {
 	}
 
 	/**
-	 * Affiche les numéro correspondant au numéro selectionner dans les trois premiers selecteur du carré
+	 * Affiche les numéro correspondant au numéro selectionner dans les trois
+	 * premiers selecteur du carré
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener carre3_listener() {
@@ -691,6 +700,7 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Augmente la mise lorsque l'utilisateur appuie sur le bouton plus
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener plus_listener() {
@@ -710,6 +720,7 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Diminue la mise lorsque l'utilisateur appuie sur le bouton moins
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener moins_listener() {
@@ -730,6 +741,7 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Mise les paris sélectionner et affiche le résultat dans la liste
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener miser_listener() {
@@ -969,6 +981,7 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Supprimer un paris déjà effectué
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener supprimer_listener() {
@@ -976,8 +989,7 @@ public class Partie extends JPanel implements Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(list.getSelectedIndex() != -1)
-				{
+				if (list.getSelectedIndex() != -1) {
 					int i = list.getSelectedIndex();
 					if (liste_mise.get(i) == "pair")
 						partie.MiserPair(liste_bille.get(i), 0);
@@ -988,7 +1000,8 @@ public class Partie extends JPanel implements Observer {
 					if (liste_mise.get(i) == "manque")
 						partie.MiserManque(liste_bille.get(i), 0);
 					if (liste_mise.get(i) == "numero")
-						partie.MiserNumero(liste_bille.get(i), 0, liste_num1.get(i));
+						partie.MiserNumero(liste_bille.get(i), 0,
+								liste_num1.get(i));
 					if (liste_mise.get(i) == "transversale")
 						partie.MiserTransversale(liste_bille.get(i), 0,
 								liste_num1.get(i));
@@ -999,11 +1012,12 @@ public class Partie extends JPanel implements Observer {
 						partie.MiserTransversale(liste_bille.get(i), 0,
 								liste_num1.get(i));
 					if (liste_mise.get(i) == "carre")
-						partie.MiserCarre(liste_bille.get(i), 0, liste_num1.get(i),
-								liste_num2.get(i), liste_num3.get(i),
-								liste_num4.get(i));
+						partie.MiserCarre(liste_bille.get(i), 0,
+								liste_num1.get(i), liste_num2.get(i),
+								liste_num3.get(i), liste_num4.get(i));
 					if (liste_mise.get(i) == "sizain")
-						partie.MiserSizain(liste_bille.get(i), 0, liste_num1.get(i));
+						partie.MiserSizain(liste_bille.get(i), 0,
+								liste_num1.get(i));
 					if (liste_mise.get(i) == "douzaine")
 						partie.MiserDouzaine(liste_bille.get(i), 0,
 								liste_num1.get(i));
@@ -1021,7 +1035,7 @@ public class Partie extends JPanel implements Observer {
 					liste_num2.remove(i);
 					liste_num3.remove(i);
 					liste_num4.remove(i);
-				
+
 				}
 			}
 		};
@@ -1029,7 +1043,8 @@ public class Partie extends JPanel implements Observer {
 	}
 
 	/**
-	 * Faire tourner la roue 
+	 * Faire tourner la roue
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener tourner_listener() {
@@ -1048,7 +1063,9 @@ public class Partie extends JPanel implements Observer {
 	}
 
 	/**
-	 * Arrete la roue et calcule les gains en fonction des numéros qui sont tombé
+	 * Arrete la roue et calcule les gains en fonction des numéros qui sont
+	 * tombé
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener areter_roue() {
@@ -1058,8 +1075,7 @@ public class Partie extends JPanel implements Observer {
 			public void actionPerformed(ActionEvent e) {
 				if (!tourner.isEnabled()) {
 					partie.arret = false;
-					gain.setText(Integer.toString(partie
-							.CalculerGain()));
+					gain.setText(Integer.toString(partie.CalculerGain()));
 					solde.setText(Integer.toString(partie.solde_compte()));
 					listmodel.removeAllElements();
 					partie.RemettreZero();
@@ -1088,6 +1104,7 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Ralentie la vitesse de la roue
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener ralentir_roue() {
@@ -1104,6 +1121,7 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Accelere la roue
+	 * 
 	 * @return ActionListener
 	 */
 	public ActionListener accelerer_roue() {
@@ -1122,7 +1140,9 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Désactive ou active les selecteur en fonction du paramètre
-	 * @param b:boolean
+	 * 
+	 * @param b
+	 *            :boolean
 	 */
 	public void selectorIsEnable(boolean b) {
 		numero_selector.setEnabled(b);
@@ -1149,9 +1169,10 @@ public class Partie extends JPanel implements Observer {
 			}
 		}
 	}
-	
+
 	/**
 	 * Test si deux numéros sont à côté dans le cas d'un cheval
+	 * 
 	 * @param x1
 	 * @param x2
 	 * @return boolean
@@ -1217,6 +1238,7 @@ public class Partie extends JPanel implements Observer {
 
 	/**
 	 * Test si deux numéros sont à côté dans le cas d'un carré (diagonale)
+	 * 
 	 * @param x1
 	 * @param x2
 	 * @return boolean
@@ -1296,9 +1318,9 @@ public class Partie extends JPanel implements Observer {
 
 	}
 
-	
 	/**
-	 * Met à jour les numéros des billes dés que le signal est envoyer (notifyupdate)s
+	 * Met à jour les numéros des billes dés que le signal est envoyer
+	 * (notifyupdate)s
 	 */
 	public void update(Observable arg0, Object arg1) {
 		for (int j = 0; j < partie.num_tombe.size(); j++) {

@@ -26,6 +26,7 @@ public class NouvellePartie extends JPanel {
 
 	/**
 	 * Constructeur du Panel de nouvelle partie
+	 * 
 	 * @param f1
 	 */
 	public NouvellePartie(final Fenetre f1) {
@@ -105,7 +106,9 @@ public class NouvellePartie extends JPanel {
 	}
 
 	/**
-	 * Fonction permettant de renseigner sur le positionnement des GRidbagConstraint
+	 * Fonction permettant de renseigner sur le positionnement des
+	 * GRidbagConstraint
+	 * 
 	 * @param y
 	 * @param x
 	 * @param largeur

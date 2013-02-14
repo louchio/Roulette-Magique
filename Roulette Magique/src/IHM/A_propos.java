@@ -45,7 +45,9 @@ public class A_propos extends JFrame {
 	}
 
 	/**
-	 * Fonction permettant de renseigner sur le positionnement des GRidbagConstraint
+	 * Fonction permettant de renseigner sur le positionnement des
+	 * GRidbagConstraint
+	 * 
 	 * @param y
 	 * @param x
 	 * @param largeur
